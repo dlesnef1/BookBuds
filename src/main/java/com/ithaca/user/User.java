@@ -1,6 +1,7 @@
 package com.ithaca.user;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by David on 3/24/16.
@@ -13,8 +14,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String password;
 
     public User() {
