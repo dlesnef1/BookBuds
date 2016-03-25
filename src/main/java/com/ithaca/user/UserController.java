@@ -14,18 +14,18 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    // get all accounts
+
     @RequestMapping()
     public List<User> all() {
         return new ArrayList<>();
     }
 
-    // get an account by id
+
     public User find(Long id) {
         return null;
     }
 
-    // make a new account
+
     public User create(String name, String password) {
         return null;
     }
