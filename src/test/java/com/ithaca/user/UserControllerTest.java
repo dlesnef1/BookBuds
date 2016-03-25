@@ -1,30 +1,46 @@
 package com.ithaca.user;
 
-import org.junit.Assert;
+
+import com.ithaca.BookBudsApplication;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-/**
- * Created by David on 3/24/2016.
- */
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringApplicationConfiguration(classes = BookBudsApplication.class)
+@WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
 public class UserControllerTest {
 
+    private MockMvc mvc;
+
     @Autowired
-    private UserController userController;
+    private WebApplicationContext webApplicationContext;
 
-    @Test
-    public void testAll() {
-        Assert.assertNotNull(userController.all());
+    @Before
+    public void setup() throws Exception {
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
-    public void testFind()throws Exception {
-        Assert.assertNotNull(userController.find((long) 1));
-    }
-
-    @Test
-    public void testCreate() {
-        Assert.assertNotNull(userController.create("David", "password"));
+    public void testUserController() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .get("/users")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[]")));
     }
 }
