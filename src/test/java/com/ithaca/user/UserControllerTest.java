@@ -1,45 +1,62 @@
 package com.ithaca.user;
 
 
-import com.ithaca.BookBudsApplication;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.ArrayList;
+import java.util.List;
 
-@SpringApplicationConfiguration(classes = BookBudsApplication.class)
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
-    private MockMvc mvc;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+    @Mock private UserServiceImpl userService;
+    @InjectMocks private UserController userController;
 
     @Before
-    public void setup() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    public void init() {
+        List<User> users = new ArrayList<>();
+        users.add(new User("one", "password1"));
+        users.add(new User("two", "password2"));
+
+        when(userService.all()).thenReturn(users);
+        when(userService.find((long) 1)).thenReturn(new User("three", "password3"));
+        when(userService.create("four", "password4")).thenReturn(new User("four", "password4"));
     }
 
     @Test
-    public void testUserController() throws Exception {
-        mvc.perform(MockMvcRequestBuilders
-                .get("/users")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[]")));
+    public void all() {
+        List<User> all = userController.all();
+
+        Assert.assertEquals(2, all.size());
+        Assert.assertEquals("one", all.get(0).getName());
+        Assert.assertEquals("password1", all.get(0).getPassword());
+        Assert.assertEquals("two", all.get(1).getName());
+        Assert.assertEquals("password2", all.get(1).getPassword());
+    }
+
+    @Test
+    public void find() {
+        User user = userController.find((long) 1);
+
+        Assert.assertNotNull(user);
+        Assert.assertEquals("three", user.getName());
+        Assert.assertEquals("password3", user.getPassword());
+    }
+
+    @Test
+    public void create() {
+        User user = userController.create("four", "password4");
+
+        Assert.assertNotNull(user);
+        Assert.assertEquals("four", user.getName());
+        Assert.assertEquals("password4", user.getPassword());
     }
 }
