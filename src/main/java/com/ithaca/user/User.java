@@ -15,6 +15,7 @@ public class User {
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String name;
 
     @NotNull
@@ -26,6 +27,10 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

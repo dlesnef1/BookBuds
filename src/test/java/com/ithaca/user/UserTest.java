@@ -3,6 +3,8 @@ package com.ithaca.user;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.mockito.Mockito.when;
+
 /**
  * Created by David on 3/24/16.
  */

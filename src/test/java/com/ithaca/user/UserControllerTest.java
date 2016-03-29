@@ -32,7 +32,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void all() {
+    public void allTest() {
         List<User> all = userController.all();
 
         Assert.assertEquals(2, all.size());
@@ -43,7 +43,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void find() {
+    public void findTest() {
         User user = userController.find((long) 1);
 
         Assert.assertNotNull(user);
@@ -52,7 +52,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void create() {
+    public void createTest() {
         User user = userController.create("four", "password4");
 
         Assert.assertNotNull(user);

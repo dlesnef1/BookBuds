@@ -1,8 +1,8 @@
 package com.ithaca.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,23 +12,21 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public List<User> all() {
-
-        List<User> users = new ArrayList<>();
-        users.add(new User("David", "password"));
-        users.add(new User("Nick", "password2"));
-
-        return users;
+        return (List<User>) userRepository.findAll();
     }
 
     @Override
     public User find(Long id) {
-        return new User("Shelby", "password3");
+        return userRepository.findOne(id);
     }
 
     @Override
     public User create(String name, String password) {
-        return new User(name, password);
+        return userRepository.findByName(name) == null ? userRepository.save(new User(name, password)) : null;
     }
 }
