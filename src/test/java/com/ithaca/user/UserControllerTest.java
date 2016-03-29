@@ -27,8 +27,8 @@ public class UserControllerTest {
         users.add(new User("two", "password2"));
 
         when(userService.all()).thenReturn(users);
-        when(userService.find((long) 1)).thenReturn(new User("three", "password3"));
-        when(userService.create("four", "password4")).thenReturn(new User("four", "password4"));
+        when(userService.find((long) 1)).thenReturn(new User("three", "hashed3"));
+        when(userService.create("four", "password4")).thenReturn(new User("four", "hashed4"));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class UserControllerTest {
 
         Assert.assertNotNull(user);
         Assert.assertEquals("three", user.getName());
-        Assert.assertEquals("password3", user.getPassword());
+        Assert.assertEquals("hashed3", user.getPassword());
     }
 
     @Test
@@ -57,6 +57,6 @@ public class UserControllerTest {
 
         Assert.assertNotNull(user);
         Assert.assertEquals("four", user.getName());
-        Assert.assertEquals("password4", user.getPassword());
+        Assert.assertEquals("hashed4", user.getPassword());
     }
 }

@@ -1,5 +1,6 @@
 package com.ithaca.user;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(String name, String password) {
-        return userRepository.findByName(name) == null ? userRepository.save(new User(name, password)) : null;
+        // Hash password for security reasons.
+        String securePass = BCrypt.hashpw(password, BCrypt.gensalt(12));
+
+        return userRepository.findByName(name) == null ? userRepository.save(new User(name, securePass)) : null;
     }
 }
