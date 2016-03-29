@@ -34,7 +34,9 @@ public class UserController {
     @RequestMapping("/account")
     public User find(HttpServletRequest request) {
         Claims claims = (Claims) request.getAttribute("claims");
-        return userService.find((long) claims.get("id"));
+        Integer integer = (Integer) claims.get("id");
+
+        return userService.find(integer.longValue());
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -70,6 +72,4 @@ public class UserController {
     public String test(HttpServletRequest request) {
         return "You are authorized";
     }
-
-    //TODO logout
 }
