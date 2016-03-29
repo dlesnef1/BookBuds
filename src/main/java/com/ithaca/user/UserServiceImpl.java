@@ -27,6 +27,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User checkValid(String name, String password) {
+        User user = userRepository.findByName(name);
+        if (user != null) {
+            if (BCrypt.checkpw(password, user.getPassword())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public User create(String name, String password) {
         // Hash password for security reasons.
         String securePass = BCrypt.hashpw(password, BCrypt.gensalt(12));
