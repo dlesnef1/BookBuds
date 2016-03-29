@@ -1,11 +1,13 @@
 package com.ithaca.user;
 
-import com.ithaca.BookBudsApplication;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -51,6 +53,7 @@ public class UserController {
         }
 
         // TODO store secret in better way
+        // TODO add time it expires
         String token = Jwts.builder()
                 .setSubject(name)
                 .claim("id", user.getId())
@@ -61,4 +64,12 @@ public class UserController {
         tokenMap.put("token", token);
         return tokenMap;
     }
+
+    // TODO delete this: NOT FOR REAL JUST FOR TESTING
+    @RequestMapping("/test")
+    public String test(HttpServletRequest request) {
+        return "You are authorized";
+    }
+
+    //TODO logout
 }
