@@ -67,4 +67,13 @@ public class UserServiceTest {
         Assert.assertNull(userService.checkValid("user1", "pass1"));
         Assert.assertEquals("user2", userService.checkValid("user2", "pass2").getName());
     }
+
+    @Test
+    public void changePasswordTest() {
+        // TODO fix this
+
+        when(userRepository.findByName("user3")).thenReturn(new User("user3", "$2a$12$yJHCPO5jhCVO0m3jZICwoe1k9wq2ADDIq6raEXa88CKrQ8yXrke7u"));
+
+        Assert.assertEquals("pass3", userService.changePassword("user3", "pass3", "answer3").getPassword());
+    }
 }

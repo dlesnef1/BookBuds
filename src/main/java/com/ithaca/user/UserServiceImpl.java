@@ -38,10 +38,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User changePassword(String name, String newPassword, String answer) {
+        User user = userRepository.findByName(name);
+        if (user != null) {
+            if (BCrypt.checkpw(answer, user.getSecurityAnswer())) {
+                user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt(12)));
+                return userRepository.save(user);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public User create(String name, String password, String question, String answer) {
         // Hash password for security reasons.
         String securePass = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        String secureAnswer = BCrypt.hashpw(answer, BCrypt.gensalt(12));
 
-        return userRepository.findByName(name) == null ? userRepository.save(new User(name, securePass, question, answer)) : null;
+        return userRepository.findByName(name) == null ? userRepository.save(new User(name, securePass, question, secureAnswer)) : null;
     }
 }

@@ -81,4 +81,13 @@ public class UserControllerTest {
         Assert.assertNull(userController.login("user7", "pass7"));
         Assert.assertEquals("mockToken", userController.login("user6", "pass6").get("token"));
     }
+
+    @Test
+    public void changePasswordTest() {
+        User user = new User("user7", "password7", "question7", "answer7");
+        Assert.assertEquals("password7", user.getPassword());
+
+        when(userService.changePassword("user7", "pass7", "answer7")).thenReturn(new User("user7", "pass7", "question7", "answer7"));
+        Assert.assertEquals("pass7", userController.changePassword("user7", "pass7", "answer7").getPassword());
+    }
 }

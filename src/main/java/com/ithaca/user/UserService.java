@@ -14,4 +14,6 @@ public interface UserService {
     User create(String name, String password, String question, String answer);
 
     User checkValid(String name, String password);
+
+    User changePassword(String name, String newPassword, String answer);
 }

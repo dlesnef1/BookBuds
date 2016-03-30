@@ -1,17 +1,12 @@
 package com.ithaca.user;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,5 +55,14 @@ public class UserController {
             return null;
         }
         return userHelper.generateToken(user);
+    }
+
+    @RequestMapping(value = "/recover", method = RequestMethod.POST)
+    public User changePassword(String name, String newPassword, String answer) {
+        User user = userService.changePassword(name, newPassword, answer);
+        if (user == null) {
+            return null;
+        }
+        return user;
     }
 }
