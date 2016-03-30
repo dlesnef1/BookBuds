@@ -13,7 +13,6 @@ public class BookBudsApplication {
 		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
 		registrationBean.setFilter(new JwtFilter());
 		registrationBean.addUrlPatterns("/users/account");
-		registrationBean.addUrlPatterns("/users/test");
 		return registrationBean;
 	}
 
