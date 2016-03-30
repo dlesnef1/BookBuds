@@ -26,6 +26,9 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
+    @Autowired
+    UserHelper userHelper;
+
     @RequestMapping
     public List<User> all() {
         return userService.all();
@@ -34,42 +37,28 @@ public class UserController {
     @RequestMapping("/account")
     public User find(HttpServletRequest request) {
         Claims claims = (Claims) request.getAttribute("claims");
-        Integer integer = (Integer) claims.get("id");
+        Integer id = (Integer) claims.get("id");
 
-        return userService.find(integer.longValue());
+        return userService.find(id.longValue());
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public User create(String name, String password) {
-        //TODO log in afterwards
+    public Map<String, String> create(String name, String password) {
 
-        return userService.create(name, password);
+        User user = userService.create(name, password);
+        if (user == null) {
+            return null;
+        }
+        return userHelper.generateToken(user);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, String> login(@RequestParam(value = "name") String name,
-                                     @RequestParam(value = "password") String password) {
+    public Map<String, String> login(String name, String password) {
+
         User user = userService.checkValid(name, password);
         if (user == null) {
             return null;
         }
-
-        // TODO store secret in better way
-        // TODO add time it expires
-        String token = Jwts.builder()
-                .setSubject(name)
-                .claim("id", user.getId())
-                .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "secret").compact();
-
-        Map <String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token", token);
-        return tokenMap;
-    }
-
-    // TODO delete this: NOT FOR REAL JUST FOR TESTING
-    @RequestMapping("/test")
-    public String test(HttpServletRequest request) {
-        return "You are authorized";
+        return userHelper.generateToken(user);
     }
 }
