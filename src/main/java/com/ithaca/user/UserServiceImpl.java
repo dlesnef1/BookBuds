@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(String name, String password) {
+    public User create(String name, String password, String question, String answer) {
         // Hash password for security reasons.
         String securePass = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
-        return userRepository.findByName(name) == null ? userRepository.save(new User(name, securePass)) : null;
+        return userRepository.findByName(name) == null ? userRepository.save(new User(name, securePass, question, answer)) : null;
     }
 }

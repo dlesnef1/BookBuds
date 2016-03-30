@@ -43,9 +43,9 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String, String> create(String name, String password) {
+    public Map<String, String> create(String name, String password, String question, String answer) {
 
-        User user = userService.create(name, password);
+        User user = userService.create(name, password, question, answer);
         if (user == null) {
             return null;
         }

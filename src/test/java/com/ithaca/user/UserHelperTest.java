@@ -13,6 +13,6 @@ public class UserHelperTest {
 
         UserHelper userHelper = new UserHelper();
         Assert.assertEquals("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSJ9.RPTbu-xzGgLwcwsyN8wQNn5FpEWjJ_YvzP1gBb3m-Q4",
-                userHelper.generateToken(new User("user1", "pass1")).get("token"));
+                userHelper.generateToken(new User("user1", "pass1", "question", "answer")).get("token"));
     }
 }

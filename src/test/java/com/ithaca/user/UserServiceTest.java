@@ -45,20 +45,11 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createTestPass() {
-        User unsaved = new User("three", "password3");
-        when(userRepository.findByName(unsaved.getName())).thenReturn(null);
-        when(userRepository.save(any(User.class))).thenReturn(unsaved);
-
-        System.out.println(userService.create(unsaved.getName(),unsaved.getPassword()));
-    }
-
-    @Test
-    public void createTestFail() {
+    public void createTest() {
         User saved = new User("four", "password4");
         when(userRepository.findByName(saved.getName())).thenReturn(saved);
 
-        Assert.assertNull(userService.create(saved.getName(), saved.getPassword()));
+        Assert.assertNull(userService.create(saved.getName(), saved.getPassword(), "question", "answer"));
     }
 
     @Test

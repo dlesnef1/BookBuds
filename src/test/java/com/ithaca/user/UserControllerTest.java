@@ -57,15 +57,15 @@ public class UserControllerTest {
     @Test
     public void createTest() {
         User user = new User("user4", "pass4");
-        when(userService.create("user4", "pass4")).thenReturn(user);
-        when(userService.create("user5", "pass5")).thenReturn(null);
+        when(userService.create("user4", "pass4", "question4", "answer4")).thenReturn(user);
+        when(userService.create("user5", "pass5", "question5", "answer5")).thenReturn(null);
 
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", "mockToken");
         when(userHelper.generateToken(user)).thenReturn(tokenMap);
 
-        Assert.assertNull(userController.create("user5", "pass5"));
-        Assert.assertEquals("mockToken", userController.create("user4", "pass4").get("token"));
+        Assert.assertNull(userController.create("user5", "pass5", "question5", "answer5"));
+        Assert.assertEquals("mockToken", userController.create("user4", "pass4", "question4", "answer4").get("token"));
     }
 
     @Test

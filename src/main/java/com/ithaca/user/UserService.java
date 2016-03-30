@@ -11,7 +11,7 @@ public interface UserService {
 
     User find(Long id);
 
-    User create(String name, String password);
+    User create(String name, String password, String question, String answer);
 
     User checkValid(String name, String password);
 }
