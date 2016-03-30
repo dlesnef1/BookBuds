@@ -4,7 +4,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +14,6 @@ import java.util.Map;
 public class UserHelper {
 
     public Map<String, String> generateToken(User user) {
-
-        // TODO add time it expires
-        // TODO store secret in better way
 
         String token =  Jwts.builder()
                 .setSubject(user.getName())
