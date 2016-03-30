@@ -1,62 +1,84 @@
 package com.ithaca.user;
 
 
+import io.jsonwebtoken.Claims;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
     @Mock private UserServiceImpl userService;
+    @Mock private UserHelper userHelper;
     @InjectMocks private UserController userController;
-
-    @Before
-    public void init() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("one", "password1"));
-        users.add(new User("two", "password2"));
-
-        when(userService.all()).thenReturn(users);
-        when(userService.find((long) 1)).thenReturn(new User("three", "hashed3"));
-        when(userService.create("four", "password4")).thenReturn(new User("four", "hashed4"));
-    }
 
     @Test
     public void allTest() {
+        List<User> users = new ArrayList<>();
+        users.add(new User("user1", "pass1"));
+        users.add(new User("user2", "pass2"));
+        when(userService.all()).thenReturn(users);
+
         List<User> all = userController.all();
 
         Assert.assertEquals(2, all.size());
-        Assert.assertEquals("one", all.get(0).getName());
-        Assert.assertEquals("password1", all.get(0).getPassword());
-        Assert.assertEquals("two", all.get(1).getName());
-        Assert.assertEquals("password2", all.get(1).getPassword());
+        Assert.assertEquals("user1", all.get(0).getName());
+        Assert.assertEquals("pass2", all.get(1).getPassword());
     }
 
     @Test
     public void findTest() {
-        User user = userController.find((long) 1);
 
-        Assert.assertNotNull(user);
-        Assert.assertEquals("three", user.getName());
-        Assert.assertEquals("hashed3", user.getPassword());
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        Claims claims = mock(Claims.class);
+        Integer one = 1;
+
+        when(request.getAttribute("claims")).thenReturn(claims);
+        when(claims.get("id")).thenReturn(one);
+        when(userService.find(one.longValue())).thenReturn(new User("user3", "pass3"));
+
+
+        Assert.assertEquals("user3", userController.find(request).getName());
     }
 
     @Test
     public void createTest() {
-        User user = userController.create("four", "password4");
+        User user = new User("user4", "pass4");
+        when(userService.create("user4", "pass4")).thenReturn(user);
+        when(userService.create("user5", "pass5")).thenReturn(null);
 
-        Assert.assertNotNull(user);
-        Assert.assertEquals("four", user.getName());
-        Assert.assertEquals("hashed4", user.getPassword());
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", "mockToken");
+        when(userHelper.generateToken(user)).thenReturn(tokenMap);
+
+        Assert.assertNull(userController.create("user5", "pass5"));
+        Assert.assertEquals("mockToken", userController.create("user4", "pass4").get("token"));
+    }
+
+    @Test
+    public void loginTest() {
+        User user = new User("user6", "pass6");
+        when(userService.checkValid("user6", "pass6")).thenReturn(user);
+        when(userService.checkValid("user7", "pass7")).thenReturn(null);
+
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", "mockToken");
+        when(userHelper.generateToken(user)).thenReturn(tokenMap);
+
+        Assert.assertNull(userController.login("user7", "pass7"));
+        Assert.assertEquals("mockToken", userController.login("user6", "pass6").get("token"));
     }
 }

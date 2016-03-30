@@ -12,4 +12,6 @@ public interface UserService {
     User find(Long id);
 
     User create(String name, String password);
+
+    User checkValid(String name, String password);
 }
