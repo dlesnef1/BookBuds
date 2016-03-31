@@ -1,10 +1,8 @@
 package com.ithaca.user;
 
-import io.jsonwebtoken.Claims;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -12,9 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -77,5 +73,14 @@ public class UserServiceTest {
 
         Assert.assertNull(userService.checkValid("user1", "pass1"));
         Assert.assertEquals("pass3", userService.changePassword("user3", "pass3", "Rose").getPassword());
+    }
+
+    @Test
+    public void showQuestionTest() {
+
+        when(userRepository.findByName("user")).thenReturn(new User("user", "password", "Favorite color?", "green"));
+
+        Assert.assertNull(userService.showQuestion("user2"));
+        Assert.assertEquals("Favorite color?", userService.showQuestion("user").get("question"));
     }
 }

@@ -90,4 +90,13 @@ public class UserControllerTest {
         when(userService.changePassword("user7", "pass7", "answer7")).thenReturn(new User("user7", "pass7", "question7", "answer7"));
         Assert.assertEquals("pass7", userController.changePassword("user7", "pass7", "answer7").getPassword());
     }
+
+    @Test
+    public void showPasswordTest() {
+        Map<String, String> question = new HashMap<>();
+        question.put("question", "Favorite color?");
+        when(userService.showQuestion("user")).thenReturn(question);
+
+        Assert.assertEquals("Favorite color?", userController.showQuestion("user").get("question"));
+    }
 }

@@ -4,9 +4,11 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +57,11 @@ public class UserController {
             return null;
         }
         return userHelper.generateToken(user);
+    }
+
+    @RequestMapping(value = "/change-password", method = RequestMethod.GET)
+    public Map<String, String> showQuestion(@RequestParam String name) {
+        return userService.showQuestion(name);
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
