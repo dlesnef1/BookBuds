@@ -1,10 +1,8 @@
 package com.ithaca.user;
 
-import io.jsonwebtoken.Claims;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -12,9 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -45,20 +41,11 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createTestPass() {
-        User unsaved = new User("three", "password3");
-        when(userRepository.findByName(unsaved.getName())).thenReturn(null);
-        when(userRepository.save(any(User.class))).thenReturn(unsaved);
-
-        System.out.println(userService.create(unsaved.getName(),unsaved.getPassword()));
-    }
-
-    @Test
-    public void createTestFail() {
+    public void createTest() {
         User saved = new User("four", "password4");
         when(userRepository.findByName(saved.getName())).thenReturn(saved);
 
-        Assert.assertNull(userService.create(saved.getName(), saved.getPassword()));
+        Assert.assertNull(userService.create(saved.getName(), saved.getPassword(), "question", "answer"));
     }
 
     @Test
@@ -75,5 +62,25 @@ public class UserServiceTest {
 
         Assert.assertNull(userService.checkValid("user1", "pass1"));
         Assert.assertEquals("user2", userService.checkValid("user2", "pass2").getName());
+    }
+
+    @Test
+    public void changePasswordTest() {
+        User user = new User("user3", "$2a$12$yJHCPO5jhCVO0m3jZICwoe1k9wq2ADDIq6raEXa88CKrQ8yXrke7u", "question", "$2a$12$hVesoCjSYL8KiWDm1fbHDu.TO.wTAgeyl2x0gkouPs466t.Gd0JjC");
+
+        when(userRepository.findByName("user3")).thenReturn(user);
+        when(userRepository.save(any(User.class))).thenReturn(new User("user3", "pass3"));
+
+        Assert.assertNull(userService.checkValid("user1", "pass1"));
+        Assert.assertEquals("pass3", userService.changePassword("user3", "pass3", "Rose").getPassword());
+    }
+
+    @Test
+    public void showQuestionTest() {
+
+        when(userRepository.findByName("user")).thenReturn(new User("user", "password", "Favorite color?", "green"));
+
+        Assert.assertNull(userService.showQuestion("user2"));
+        Assert.assertEquals("Favorite color?", userService.showQuestion("user").get("question"));
     }
 }

@@ -21,12 +21,25 @@ public class User {
     @NotNull
     private String password;
 
+    @NotNull
+    private String securityQuestion;
+
+    @NotNull
+    private String securityAnswer;
+
     public User() {
     }
 
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public User(String name, String password, String securityQuestion, String securityAnswer) {
+        this.name = name;
+        this.password = password;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
     }
 
     public Long getId() {
@@ -47,5 +60,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    public String getSecurityAnswer() {
+        return securityAnswer;
+    }
+
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
     }
 }
