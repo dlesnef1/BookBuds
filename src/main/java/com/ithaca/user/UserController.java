@@ -57,7 +57,7 @@ public class UserController {
         return userHelper.generateToken(user);
     }
 
-    @RequestMapping(value = "/recover", method = RequestMethod.POST)
+    @RequestMapping(value = "/change-password", method = RequestMethod.POST)
     public User changePassword(String name, String newPassword, String answer) {
         User user = userService.changePassword(name, newPassword, answer);
         if (user == null) {

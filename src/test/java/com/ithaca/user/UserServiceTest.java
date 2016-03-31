@@ -70,10 +70,12 @@ public class UserServiceTest {
 
     @Test
     public void changePasswordTest() {
-        // TODO fix this
+        User user = new User("user3", "$2a$12$yJHCPO5jhCVO0m3jZICwoe1k9wq2ADDIq6raEXa88CKrQ8yXrke7u", "question", "$2a$12$hVesoCjSYL8KiWDm1fbHDu.TO.wTAgeyl2x0gkouPs466t.Gd0JjC");
 
-        when(userRepository.findByName("user3")).thenReturn(new User("user3", "$2a$12$yJHCPO5jhCVO0m3jZICwoe1k9wq2ADDIq6raEXa88CKrQ8yXrke7u"));
+        when(userRepository.findByName("user3")).thenReturn(user);
+        when(userRepository.save(any(User.class))).thenReturn(new User("user3", "pass3"));
 
-        Assert.assertEquals("pass3", userService.changePassword("user3", "pass3", "answer3").getPassword());
+        Assert.assertNull(userService.checkValid("user1", "pass1"));
+        Assert.assertEquals("pass3", userService.changePassword("user3", "pass3", "Rose").getPassword());
     }
 }
