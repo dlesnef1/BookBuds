@@ -18,11 +18,11 @@ public class Thread {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="thread_user", joinColumns=@JoinColumn(name="thread_id"), inverseJoinColumns=@JoinColumn(name="user_id"))
     private Set<User> users;
 
-    @OneToMany (mappedBy="thread", cascade=CascadeType.ALL)
+    @OneToMany (mappedBy="thread")
     List<Message> messages;
 
     public Thread() {

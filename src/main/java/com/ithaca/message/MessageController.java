@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,21 +19,21 @@ import java.util.List;
 public class MessageController {
 
     @Autowired
-    private MessageService messageService;
+    private MessageServiceImpl messageServiceImpl;
 
     @RequestMapping
-    public List<Message> all(HttpServletRequest request) {
+    public Thread findThread(@RequestParam String otherName, HttpServletRequest request) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
-        return messageService.findAll(id.longValue());
+        return messageServiceImpl.findThread(id.longValue(), otherName);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Message create(HttpServletRequest request, String recipient, String text) {
+    public Thread create(HttpServletRequest request, String recipient, String text) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
-        return messageService.create(id.longValue(), recipient, text);
+        return messageServiceImpl.create(id.longValue(), recipient, text);
     }
 }

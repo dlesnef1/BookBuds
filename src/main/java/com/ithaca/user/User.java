@@ -33,10 +33,10 @@ public class User {
     @NotNull
     private String securityAnswer;
 
-    @OneToMany (mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany (mappedBy="user")
     private List<Message> messages;
 
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy="users")
+    @ManyToMany(mappedBy="users")
     private List<Thread> threads;
 
     public User() {
@@ -93,6 +93,7 @@ public class User {
         this.securityAnswer = securityAnswer;
     }
 
+    @JsonIgnore
     public List<Message> getMessages() {
         return messages;
     }

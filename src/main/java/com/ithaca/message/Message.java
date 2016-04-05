@@ -17,10 +17,10 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Thread thread;
 
     @NotNull
@@ -43,7 +43,6 @@ public class Message {
         return id;
     }
 
-    @JsonIgnore
     public User getUser() {
         return user;
     }
