@@ -37,7 +37,7 @@ public class MessageService {
             return null;
         }
 
-        Message message = new Message(user, text, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        Message message = new Message(user, new Thread(), text, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(new java.util.Date()));
 
         messageRepository.save(message);

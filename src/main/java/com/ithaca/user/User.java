@@ -1,6 +1,8 @@
 package com.ithaca.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ithaca.message.Message;
+import com.ithaca.message.Thread;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,6 +36,9 @@ public class User {
     @OneToMany (mappedBy="user", cascade=CascadeType.ALL)
     private List<Message> messages;
 
+    @ManyToMany(cascade=CascadeType.ALL, mappedBy="users")
+    private List<Thread> threads;
+
     public User() {
     }
 
@@ -41,6 +46,7 @@ public class User {
         this.name = name;
         this.password = password;
         this.messages = new ArrayList<>();
+        this.threads = new ArrayList<>();
     }
 
     public User(String name, String password, String securityQuestion, String securityAnswer) {
@@ -93,5 +99,14 @@ public class User {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    @JsonIgnore
+    public List<Thread> getThreads() {
+        return threads;
+    }
+
+    public void setThreads(List<Thread> threads) {
+        this.threads = threads;
     }
 }

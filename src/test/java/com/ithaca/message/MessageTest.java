@@ -16,7 +16,7 @@ public class MessageTest {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
 
         User user = new User("David", "password");
-        Message message = new Message(user, "This is my message", timeStamp);
+        Message message = new Message(user, new Thread(), "This is my message", timeStamp);
 
         Assert.assertEquals("This is my message", message.getText());
         Assert.assertEquals(user, message.getUser());

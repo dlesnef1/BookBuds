@@ -1,6 +1,7 @@
 package com.ithaca.user;
 
 import com.ithaca.message.Message;
+import com.ithaca.message.Thread;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -38,7 +39,7 @@ public class UserTest {
         user.setSecurityAnswer("pizza");
         Assert.assertEquals("pizza", user.getSecurityAnswer());
 
-        user.getMessages().add(new Message(user, "message", "time"));
+        user.getMessages().add(new Message(user, new Thread(), "message", "time"));
         Assert.assertEquals(1, user.getMessages().size());
     }
 }

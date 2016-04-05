@@ -20,6 +20,9 @@ public class Message {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Thread thread;
+
     @NotNull
     private String text;
 
@@ -29,8 +32,9 @@ public class Message {
     public Message() {
     }
 
-    public Message(User user, String text, String created) {
+    public Message(User user, Thread thread, String text, String created) {
         this.user = user;
+        this.thread = thread;
         this.text = text;
         this.created = created;
     }
@@ -54,5 +58,14 @@ public class Message {
 
     public String getCreated() {
         return created;
+    }
+
+    @JsonIgnore
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
     }
 }
