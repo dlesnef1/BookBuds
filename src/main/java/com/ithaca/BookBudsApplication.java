@@ -16,6 +16,7 @@ public class BookBudsApplication {
 		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
 		registrationBean.setFilter(new JwtFilter());
 		registrationBean.addUrlPatterns("/users/account");
+		registrationBean.addUrlPatterns("/messages");
 		return registrationBean;
 	}
 

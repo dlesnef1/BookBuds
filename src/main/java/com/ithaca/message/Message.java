@@ -1,5 +1,6 @@
 package com.ithaca.message;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ithaca.user.User;
 
 import javax.persistence.*;
@@ -25,6 +26,9 @@ public class Message {
     @NotNull
     private String created;
 
+    public Message() {
+    }
+
     public Message(User user, String text, String created) {
         this.user = user;
         this.text = text;
@@ -35,6 +39,7 @@ public class Message {
         return id;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
     }
