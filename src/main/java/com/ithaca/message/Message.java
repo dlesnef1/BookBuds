@@ -16,7 +16,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne (cascade=CascadeType.ALL)
+    @ManyToOne
     private User user;
 
     @NotNull
