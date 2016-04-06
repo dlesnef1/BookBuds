@@ -43,8 +43,13 @@ public class Message {
         return id;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
+    }
+
+    public String getUsername() {
+        return user.getName();
     }
 
     public String getText() {
