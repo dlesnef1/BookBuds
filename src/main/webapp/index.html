@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>BookBuds</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">
+    <script src="libs/jquery/jquery.js"></script>
+    <script src="libs/bootstrap/js/bootstrap.js"></script>
+    <script src="libs/angular/angular.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+<div class="container" ng-controller='MainCtrl'>
+    <h1>{{greeting}}</h1>
+    <div ng-show="!loggedIn()">
+        Please log in:</br>
+        <form ng-submit="login()">
+            Username: <input type="text" ng-model="userName"/><span><br>
+            Password: <input type="password" ng-model="password"/><br>
+            <input type="submit" value="Login"/>
+        </form>
+
+        <br><br>
+        Create an account:<br>
+        <form ng-submit="createAccount()">
+            Username: <input type="text" ng-model="userName"/><span><br>
+                Password: <input type="password" ng-model="password"/><br>
+                Question: <input type="text" ng-model="question"/><br>
+                Answer: <input type="text" ng-model="answer"/><br>
+                <input type="submit" value="Create Account"/>
+
+        </form>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-show="error.data.message">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{error.data.message}}
+    </div>
+    <div ng-show="loggedIn()">
+        <div class="row">
+            <div class="col-md-6">
+                <h3><span class="label label-success">Success!</span> Welcome {{userName}}</h3>
+                <a href ng-click="logout()">(logout)</a>
+            </div>
+            <div class="col-md-4">
+
+                <form ng-submit="getAccountDetails()">
+                    <input type="submit" value="Get Account Details"/>
+                </form>
+                <div class="row header">
+                    <div class="col-sm-4">{{userName}} is a member of BookBuds</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
