@@ -55,6 +55,7 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.messages = new ArrayList<>();
+        this.threads = new ArrayList<>();
     }
 
     public Long getId() {
