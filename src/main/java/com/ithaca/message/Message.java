@@ -68,8 +68,4 @@ public class Message {
     public Thread getThread() {
         return thread;
     }
-
-    public void setThread(Thread thread) {
-        this.thread = thread;
-    }
 }

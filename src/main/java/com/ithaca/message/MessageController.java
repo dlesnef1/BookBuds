@@ -21,7 +21,7 @@ public class MessageController {
     private MessageServiceImpl messageServiceImpl;
 
     @RequestMapping
-    public Thread findThread(@RequestParam String otherName, HttpServletRequest request) {
+    public Thread findThread(HttpServletRequest request, @RequestParam String otherName) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 

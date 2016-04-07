@@ -34,15 +34,7 @@ public class Thread {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     public List<Message> getMessages() {
         return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
     }
 }
