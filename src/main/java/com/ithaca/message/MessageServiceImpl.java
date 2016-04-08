@@ -76,4 +76,30 @@ public class MessageServiceImpl implements MessageService{
         messageRepository.save(message);
         return threadRepository.save(currentThread);
     }
+
+    @Override
+    public Thread edit(Long userId, Long messageId, String text) {
+        User user = userRepository.findOne(userId);
+        Message message = messageRepository.findOne(messageId);
+
+        if (!user.getMessages().contains(message)) {
+            return null;
+        }
+
+        message.setText(text);
+        messageRepository.save(message);
+        return message.getThread();
+    }
+
+    @Override
+    public Boolean delete(Long userId, Long messageId) {
+        User user = userRepository.findOne(userId);
+        Message message = messageRepository.findOne(messageId);
+
+        if (!user.getMessages().contains(message)) {
+            return false;
+        }
+        messageRepository.delete(message);
+        return true;
+    }
 }

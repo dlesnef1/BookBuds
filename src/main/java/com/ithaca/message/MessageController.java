@@ -2,10 +2,7 @@ package com.ithaca.message;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,5 +31,21 @@ public class MessageController {
         Integer id = (Integer) claims.get("id");
 
         return messageServiceImpl.create(id.longValue(), recipient, text);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Thread edit(HttpServletRequest request, @PathVariable("id") Long messageId, @RequestParam String text) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return messageServiceImpl.edit(id.longValue(), messageId, text);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Boolean delete(HttpServletRequest request, @PathVariable("id") Long messageId) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return messageServiceImpl.delete(id.longValue(), messageId);
     }
 }

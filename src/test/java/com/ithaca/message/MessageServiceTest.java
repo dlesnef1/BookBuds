@@ -68,4 +68,39 @@ public class MessageServiceTest {
 
         Assert.assertTrue(messageService.create(one, "Nick", "A message to Nick").getUsers().contains(user1));
     }
+
+    @Test
+    public void editTest() {
+        Long one = 1L;
+        User user = new User("David", "pass");
+        Thread thread = new Thread();
+        thread.getUsers().add(user);
+        Message message = new Message(user, thread, "Message to Nick", "time");
+        thread.getMessages().add(message);
+        user.getThreads().add(thread);
+        user.getMessages().add(message);
+
+        when(userRepository.findOne(one)).thenReturn(user);
+        when(messageRepository.findOne(one)).thenReturn(message);
+
+        Assert.assertEquals("new message", messageService.edit(one, one, "new message").getMessages().get(0).getText());
+    }
+
+    @Test
+    public void deleteTest() {
+        Long one = 1L;
+        User user = new User("David", "pass");
+        Thread thread = new Thread();
+        thread.getUsers().add(user);
+        Message message = new Message(user, thread, "Message to Nick", "time");
+        thread.getMessages().add(message);
+        user.getThreads().add(thread);
+        user.getMessages().add(message);
+
+        when(userRepository.findOne(one)).thenReturn(user);
+        when(messageRepository.findOne(one)).thenReturn(message);
+
+        Assert.assertEquals(true, messageService.delete(one, one));
+        Assert.assertEquals(false, messageService.delete(one, 2L));
+    }
 }
