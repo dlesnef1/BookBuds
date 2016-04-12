@@ -46,6 +46,8 @@ public class MessageControllerTest {
         when(claims.get("id")).thenReturn(one);
         when(messageService.findThread(one.longValue(), "Nick")).thenReturn(thread);
         when(messageService.create(one.longValue(), "Nick", "Another message to Nick")).thenReturn(new Thread());
+
+        when(messageService.delete(1L, 1L)).thenReturn(Boolean.TRUE);
     }
 
     @Test
@@ -57,5 +59,10 @@ public class MessageControllerTest {
     @Test
     public void testCreate() {
         Assert.assertEquals(0 ,messageController.create(request, "Nick", "Another message to Nick").getMessages().size());
+    }
+
+    @Test
+    public void testDelete() {
+        Assert.assertTrue(messageController.delete(request, 1L));
     }
 }
