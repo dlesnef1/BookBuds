@@ -10,4 +10,8 @@ public interface MessageService {
 
     // Create a new message for a thread between the two users, if thread doesn't exist, make it.
     Thread create(Long userId, String recipientName, String text);
+
+    Thread edit(Long userId, Long messageId, String text);
+
+    Boolean delete(Long userId, Long messageId);
 }

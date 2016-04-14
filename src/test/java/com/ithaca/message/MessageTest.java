@@ -26,5 +26,8 @@ public class MessageTest {
 
         Assert.assertNotNull(message.getCreated());
         Assert.assertEquals("David", message.getUsername());
+
+        Message message1 = new Message();
+        Assert.assertEquals(null, message1.getText());
     }
 }
