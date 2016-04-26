@@ -67,6 +67,7 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
         $scope.loggedIn = function() {
             return $scope.token !== null;
         }
+
     }
 ]);
 
@@ -74,41 +75,150 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
 
 appModule.service('mainService', function($http) {
     return {
-        login : function(username, password) {
-            var data = "name="+username+"&password="+password;
+        login: function (username, password) {
+            var data = "name=" + username + "&password=" + password;
 
             console.log(data)
             $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 
-            return $http.post('http://localhost:8080/users/login', data).then(function(response) {
+            return $http.post('http://localhost:8080/users/login', data).then(function (response) {
                 return response.data.token;
             });
 
         },
 
-        createAccount : function(username, password, question, answer) {
-            var data = "name="+username+"&password="+password+"&question="+question+"answer="+answer;
+        createAccount: function (username, password, question, answer) {
+            var data = "name=" + username + "&password=" + password + "&question=" + question + "answer=" + answer;
 
             console.log(data)
             $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 
-            return $http.post('http://localhost:8080/users', data).then(function(response) {
+            return $http.post('http://localhost:8080/users', data).then(function (response) {
                 return response.data.token;
             });
 
         },
 
-        getAccountDetails : function() {
+        getAccountDetails: function () {
             var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
 
 
-            return $http.get('http://localhost:8080/users/account').then(function(response){
+            return $http.get('http://localhost:8080/users/account').then(function (response) {
                 console.log("response.data.id = " + response.data.id);
                 return response.data.id;
             });
         },
 
+        messages: function () {
+            var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
+
+
+            return $http.get('http://localhost:8080/users/messages').then(function (response) {
+                console.log("response.data.id = " + response.data.id);
+                return response.data.id;
+            });
+        }
+
     };
 });
+
+
+
+
+
+    appModule.controller('messageController', ['messages','$scope','$http',
+        function(messages, $scope, $http) {
+            $scope.greeting = 'Individual Messaging: ';
+            $scope.token = null;
+            $scope.error = null;
+
+
+            $scope.findThread = function () {
+                $scope.error = null;
+                //messages.findThread($http.put(request), $scope.userName).then(function (token) {
+                messages.findThread($scope.data, $scope.userName).then(function (token) {
+                        $scope.token = token;
+                        console.log("token=" + token);
+                        console.log("userName="+userName);
+                        console.log("data="+data)
+
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+
+                    },
+                    function (error) {
+                        $scope.error = error;
+                        $scope.userName = '';
+                    });
+            }
+            $scope.createMessage = function() {
+                $scope.error = null;
+                messages.createMessage($scope.userName, $scope.message).then(function(token){
+                        $scope.token = token;
+                        console.log("token="+token);
+
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+                    },
+                    function(error){
+                        $scope.error = error;
+                        $scope.userName = '';
+                        $scope.password = '';
+                        $scope.question = '';
+                        $scope.answer = '';
+                    });
+
+                $scope.threadCreated = function() {
+                    return $scope.token !== null;
+                }
+            }
+            $scope.edit = function() {
+                $scope.error = null;
+                messages.edit($scope.userName, $scope.message).then(function(token){
+                        $scope.token = token;
+                        console.log("token="+token);
+
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+                    },
+                    function(error){
+                        $scope.error = error;
+                        $scope.userName = '';
+                        $scope.password = '';
+                        $scope.question = '';
+                        $scope.answer = '';
+                    });
+            }
+            $scope.delete = function() {
+                $scope.error = null;
+                messages.delete($scope.userName, $scope.message).then(function(token){
+                        $scope.token = token;
+                        console.log("token="+token);
+
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+                    },
+                    function(error){
+                        $scope.error = error;
+                        $scope.userName = '';
+                        $scope.password = '';
+                        $scope.question = '';
+                        $scope.answer = '';
+                    });
+            }
+
+
+
+            /*$scope.logout = function() {
+                $scope.userName = '';
+                $scope.password = '';
+                $scope.question = '';
+                $scope.answer = '';
+                $scope.token = null;
+                $http.defaults.headers.common.Authorization = '';
+            }*/
+
+            $scope.threadCreated = function() {
+                return $scope.messages() !== null;
+            }
+
+        }
+    ]);
