@@ -20,15 +20,27 @@ public class Book {
     private Long id;
 
     @NotNull
+    @Column(columnDefinition="text")
     private String title;
 
     @NotNull
+    @Column(columnDefinition="text")
     private String author;
+
+    @NotNull
+    private String publisher;
 
     @NotNull
     private String isbn;
 
+    @NotNull
+    private String date;
+
+    @Column(columnDefinition="text")
     private String imageUrl;
+
+    @Column(columnDefinition="text")
+    private String description;
 
     @OneToMany(mappedBy = "book")
     private List<Book_Group> book_groups;
@@ -36,11 +48,14 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String author, String isbn, String imageUrl) {
+    public Book(String title, String author, String publisher, String isbn, String date, String imageUrl, String description) {
         this.title = title;
         this.author = author;
+        this.publisher = publisher;
         this.isbn = isbn;
+        this.date = date;
         this.imageUrl = imageUrl;
+        this.description = description;
         this.book_groups = new ArrayList<>();
     }
 
@@ -72,12 +87,36 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @JsonIgnore
