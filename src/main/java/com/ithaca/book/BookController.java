@@ -1,10 +1,8 @@
 package com.ithaca.book;
 
+import com.ithaca.group.Book_Group;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,13 +17,13 @@ public class BookController {
     @Autowired
     BookServiceImpl bookService;
 
-    @RequestMapping
-    public List<Book> all() {
-        return bookService.all();
-    }
-
     @RequestMapping(method = RequestMethod.POST)
     public List<Book> search(@RequestParam String title) {
         return bookService.search(title);
+    }
+
+    @RequestMapping("/{id}")
+    public List<Book_Group> findGroups(@PathVariable Long id) {
+        return bookService.findGroups(id);
     }
 }

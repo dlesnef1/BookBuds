@@ -1,5 +1,7 @@
 package com.ithaca.book;
 
+import com.ithaca.group.Book_Group;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  */
 public interface BookService {
 
-    List<Book> all();
-
     List<Book> search(String title);
+
+    List<Book_Group> findGroups(Long id);
 }
