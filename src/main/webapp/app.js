@@ -137,35 +137,32 @@ appModule.service('mainService', function($http) {
 
             $scope.findThread = function () {
                 $scope.error = null;
-                //messages.findThread($http.put(request), $scope.userName).then(function (token) {
-                messages.findThread($scope.data, $scope.userName).then(function (token) {
+                messages.findThread($scope.thread, $scope.userName).then(function (token) {
                         $scope.token = token;
-                        console.log("token=" + token);
                         console.log("userName="+userName);
                         console.log("data="+data)
-
-                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
-
                     },
                     function (error) {
                         $scope.error = error;
                         $scope.userName = '';
+                        $scope.thread = '';
+                        $scope.message = '';
+                        $scope.created = '';
                     });
             }
             $scope.createMessage = function() {
                 $scope.error = null;
-                messages.createMessage($scope.userName, $scope.message).then(function(token){
+                messages.createMessage($scope.userName, $scope.thread, $scope.message, $scope.created).then(function(token){
                         $scope.token = token;
                         console.log("token="+token);
 
-                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
                     },
                     function(error){
                         $scope.error = error;
                         $scope.userName = '';
-                        $scope.password = '';
-                        $scope.question = '';
-                        $scope.answer = '';
+                        $scope.thread = '';
+                        $scope.message = '';
+                        $scope.created = '';
                     });
 
                 $scope.threadCreated = function() {
@@ -176,45 +173,29 @@ appModule.service('mainService', function($http) {
                 $scope.error = null;
                 messages.edit($scope.userName, $scope.message).then(function(token){
                         $scope.token = token;
-                        console.log("token="+token);
 
-                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
                     },
                     function(error){
                         $scope.error = error;
                         $scope.userName = '';
-                        $scope.password = '';
-                        $scope.question = '';
-                        $scope.answer = '';
+                        $scope.thread = '';
+                        $scope.message = '';
+                        $scope.created = '';
                     });
             }
             $scope.delete = function() {
                 $scope.error = null;
                 messages.delete($scope.userName, $scope.message).then(function(token){
-                        $scope.token = token;
-                        console.log("token="+token);
 
-                        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
                     },
                     function(error){
                         $scope.error = error;
                         $scope.userName = '';
-                        $scope.password = '';
-                        $scope.question = '';
-                        $scope.answer = '';
+                        $scope.thread = '';
+                        $scope.message = '';
+                        $scope.created = '';
                     });
             }
-
-
-
-            /*$scope.logout = function() {
-                $scope.userName = '';
-                $scope.password = '';
-                $scope.question = '';
-                $scope.answer = '';
-                $scope.token = null;
-                $http.defaults.headers.common.Authorization = '';
-            }*/
 
             $scope.threadCreated = function() {
                 return $scope.messages() !== null;
