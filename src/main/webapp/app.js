@@ -111,9 +111,9 @@ appModule.service('mainService', function($http) {
             });
         },
 
-        messages: function () {
-            var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
-
+        threadCreated: function () {
+            //var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
+            var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVsYnkiLCJpZCI6MX0.tPHXDoVRTafaOkgCcE0u0e_WtcAWEOxfcP7LZyOR_fM'";
 
             return $http.get('http://localhost:8080/users/messages').then(function (response) {
                 console.log("response.data.id = " + response.data.id);
@@ -137,7 +137,7 @@ appModule.service('mainService', function($http) {
 
             $scope.findThread = function () {
                 $scope.error = null;
-                messages.findThread($scope.thread, $scope.userName).then(function (token) {
+                messages.findThread($scope.thread, $scope.userName, $http).then(function (token) {
                         $scope.token = token;
                         console.log("userName="+userName);
                         console.log("data="+data)
@@ -152,7 +152,7 @@ appModule.service('mainService', function($http) {
             }
             $scope.createMessage = function() {
                 $scope.error = null;
-                messages.createMessage($scope.userName, $scope.thread, $scope.message, $scope.created).then(function(token){
+                messages.createMessage( $scope.userName, $scope.thread, $scope.message, $scope.created).then(function(token){
                         $scope.token = token;
                         console.log("token="+token);
 
@@ -166,7 +166,7 @@ appModule.service('mainService', function($http) {
                     });
 
                 $scope.threadCreated = function() {
-                    return $scope.token !== null;
+                    return $scope.thread !== null;
                 }
             }
             $scope.edit = function() {
