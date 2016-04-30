@@ -21,6 +21,8 @@ public class BookBudsApplication {
 		registrationBean.addUrlPatterns("/users/account");
 		registrationBean.addUrlPatterns("/messages");
 		registrationBean.addUrlPatterns("/messages/*");
+		registrationBean.addUrlPatterns("/groups");
+		registrationBean.addUrlPatterns("/groups/*");
 		return registrationBean;
 	}
 

@@ -23,6 +23,11 @@ public class BookController {
     }
 
     @RequestMapping("/{id}")
+    public Book findBook(@PathVariable Long id) {
+        return bookService.findBook(id);
+    }
+
+    @RequestMapping("/{id}/groups")
     public List<Book_Group> findGroups(@PathVariable Long id) {
         return bookService.findGroups(id);
     }

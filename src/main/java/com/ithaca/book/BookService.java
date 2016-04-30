@@ -11,5 +11,7 @@ public interface BookService {
 
     List<Book> search(String title);
 
+    Book findBook(Long id);
+
     List<Book_Group> findGroups(Long id);
 }

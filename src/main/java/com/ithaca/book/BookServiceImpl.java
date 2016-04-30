@@ -25,6 +25,11 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    public Book findBook(Long id) {
+        return bookRepository.findOne(id);
+    }
+
+    @Override
     public List<Book_Group> findGroups(Long id) {
         Book book = bookRepository.findOne(id);
         if (book == null) {
