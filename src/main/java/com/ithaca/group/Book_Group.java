@@ -19,7 +19,7 @@ public class Book_Group {
     private Long id;
 
     @OneToMany(mappedBy="bookGroup")
-    private List<Post> postList;
+    private List<Post> posts;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Book book;
@@ -33,7 +33,7 @@ public class Book_Group {
 
     public Book_Group(Book book) {
         this.book = book;
-        this.postList = new ArrayList<>();
+        this.posts = new ArrayList<>();
         this.users = new ArrayList<>();
     }
 
@@ -45,12 +45,12 @@ public class Book_Group {
         this.id = id;
     }
 
-    public List<Post> getPostList() {
-        return postList;
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void setPostList(List<Post> postList) {
-        this.postList = postList;
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Book getBook() {

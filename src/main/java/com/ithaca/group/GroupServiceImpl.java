@@ -7,6 +7,8 @@ import com.ithaca.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by David on 4/28/16.
  */
@@ -15,13 +17,16 @@ import org.springframework.stereotype.Service;
 public class GroupServiceImpl implements GroupService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
-    GroupRepository groupRepository;
+    private GroupRepository groupRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Override
     public Book_Group create(Long userId, Long bookId) {
@@ -63,6 +68,28 @@ public class GroupServiceImpl implements GroupService {
 
         userRepository.save(user);
         groupRepository.save(bookGroup);
+
+        return bookGroup;
+    }
+
+    @Override
+    public Book_Group post(Long userId, Long groupId, String text) {
+        User user = userRepository.findOne(userId);
+        Book_Group bookGroup = groupRepository.findOne(groupId);
+
+        if (user == null || bookGroup == null || !bookGroup.getUsers().contains(user)) {
+            return null;
+        }
+
+        Post post = new Post(user, bookGroup, text,
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
+
+        user.getPosts().add(post);
+        bookGroup.getPosts().add(post);
+
+        userRepository.save(user);
+        groupRepository.save(bookGroup);
+        postRepository.save(post);
 
         return bookGroup;
     }

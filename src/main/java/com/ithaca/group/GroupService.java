@@ -8,4 +8,6 @@ public interface GroupService {
     Book_Group create(Long userId, Long bookId);
 
     Book_Group join(Long userId, Long groupId);
+
+    Book_Group post(Long userId, Long groupId, String text);
 }

@@ -2,10 +2,7 @@ package com.ithaca.group;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,11 +25,19 @@ public class GroupController {
         return groupService.create(id.longValue(), bookId);
     }
 
-    @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public Book_Group join(HttpServletRequest request, @RequestParam Long groupId) {
+    @RequestMapping(value = "/{groupId}/join", method = RequestMethod.POST)
+    public Book_Group join(HttpServletRequest request, @PathVariable Long groupId) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
         return groupService.join(id.longValue(), groupId);
+    }
+
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.POST)
+    public Book_Group post(HttpServletRequest request, @PathVariable Long groupId, @RequestParam String text) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return groupService.post(id.longValue(), groupId, text);
     }
 }
