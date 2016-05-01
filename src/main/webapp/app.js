@@ -109,19 +109,9 @@ appModule.service('mainService', function($http) {
                 console.log("response.data.id = " + response.data.id);
                 return response.data.id;
             });
-        },
-
-        threadCreated: function () {
-            //var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
-            var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGVsYnkiLCJpZCI6MX0.tPHXDoVRTafaOkgCcE0u0e_WtcAWEOxfcP7LZyOR_fM'";
-
-            return $http.get('http://localhost:8080/users/messages').then(function (response) {
-                console.log("response.data.id = " + response.data.id);
-                return response.data.id;
-            });
         }
 
-    };
+    }
 });
 
 
@@ -130,9 +120,10 @@ appModule.service('mainService', function($http) {
 
     appModule.controller('messageController', ['messages','$scope','$http',
         function(messages, $scope, $http) {
-            $scope.greeting = 'Individual Messaging: ';
+            $scope.greeting = 'IndividualMessaging: ';
             $scope.token = null;
             $scope.error = null;
+            $scope.threadCreated = false;
 
 
             $scope.findThread = function () {
@@ -198,8 +189,47 @@ appModule.service('mainService', function($http) {
             }
 
             $scope.threadCreated = function() {
-                return $scope.messages() !== null;
+                return $scope.message !== null;
             }
 
         }
     ]);
+
+appModule.service('messageController', function($http) {
+    return {
+        findThread: function (thread, username) {
+            var data = "threadCreated=" + threadCreated() + "name=" + username;
+
+            return $http.get('http://localhost:8080/users/messages').then(function (response) {
+                console.log("response.data.id = " + response.data.id);
+                return response.data.id;
+            });
+        },
+        createMessage: function (thread, username, message) {
+            threadCreated == true;
+            var data = "threadCreated=" + threadCreated() + "name=" + username + "message=" + message;
+
+            return $http.post('http://localhost:8080/users/messages').then(function (response) {
+                console.log("response.data.id = " + response.data.id);
+                return response.data.id;
+            });
+        },
+        edit: function (thread, username, message, newMessage) {
+            var data = "threadCreated=" + threadCreated() + "name=" + username + "message=" + message + "new Message=" + newMessage;
+
+            return $http.put('http://localhost:8080/users/messages').then(function (response) {
+                console.log("response.data.id = " + response.data.id);
+                return response.data.id;
+            });
+        },
+        delete: function (thread, username, message) {
+            var data = "threadCreated=" + threadCreated() + "name=" + username + "message=" + message;
+
+
+            return $http.put('http://localhost:8080/users/messages').then(function (response) {
+                console.log("response.data.id = " + response.data.id);
+                return response.data.id;
+            });
+        }
+    }
+});
