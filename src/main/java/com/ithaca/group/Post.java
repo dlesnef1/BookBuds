@@ -31,6 +31,9 @@ public class Post {
     @NotNull
     private String created;
 
+    @NotNull
+    private Integer score;
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Post parent;
 
@@ -45,6 +48,7 @@ public class Post {
         this.user = user;
         this.text = text;
         this.created = created;
+        this.score = 0;
         this.parent = parent;
         this.children = new ArrayList<>();
     }
@@ -88,6 +92,14 @@ public class Post {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     @JsonIgnore

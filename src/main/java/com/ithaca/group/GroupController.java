@@ -41,7 +41,7 @@ public class GroupController {
         return groupService.find(id.longValue(), groupId);
     }
 
-    @RequestMapping(value = "/{groupId}/post", method = RequestMethod.POST)
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.POST)
     public Book_Group post(HttpServletRequest request, @PathVariable Long groupId, @RequestParam String text) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
@@ -63,5 +63,13 @@ public class GroupController {
         Integer id = (Integer) claims.get("id");
 
         return groupService.edit(id.longValue(), groupId, postId, text);
+    }
+
+    @RequestMapping(value = "/{groupId}/{postId}/upvote", method = RequestMethod.PUT)
+    public Book_Group upvote(HttpServletRequest request, @PathVariable Long groupId, @PathVariable Long postId) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return groupService.upvote(id.longValue(), groupId, postId);
     }
 }

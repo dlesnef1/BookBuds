@@ -146,4 +146,22 @@ public class GroupServiceImpl implements GroupService {
 
         return bookGroup;
     }
+
+    @Override
+    public Book_Group upvote(Long userId, Long groupId, Long postId) {
+        User user = userRepository.findOne(userId);
+        Book_Group bookGroup = groupRepository.findOne(groupId);
+        Post post = postRepository.findOne(postId);
+
+        if (user == null || bookGroup == null || post == null) {
+            return null;
+        }
+        post.setScore(post.getScore() + 1);
+
+        userRepository.save(user);
+        groupRepository.save(bookGroup);
+        postRepository.save(post);
+
+        return bookGroup;
+    }
 }
