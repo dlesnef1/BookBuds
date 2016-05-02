@@ -72,4 +72,12 @@ public class GroupController {
 
         return groupService.upvote(id.longValue(), groupId, postId);
     }
+
+    @RequestMapping(value = "/{groupId}/{postId}/report", method = RequestMethod.PUT)
+    public Book_Group report(HttpServletRequest request, @PathVariable Long groupId, @PathVariable Long postId) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return groupService.report(id.longValue(), groupId, postId);
+    }
 }
