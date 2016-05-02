@@ -138,6 +138,11 @@ public class GroupServiceImpl implements GroupService {
         if (user == null || bookGroup == null || post == null || !user.getPosts().contains(post)) {
             return null;
         }
+
+        if (post.getReported() == Reported.DELETED) {
+            return null;
+        }
+
         post.setText(text);
 
         userRepository.save(user);
@@ -156,7 +161,37 @@ public class GroupServiceImpl implements GroupService {
         if (user == null || bookGroup == null || post == null) {
             return null;
         }
+
+        if (post.getReported() == Reported.DELETED) {
+            return null;
+        }
+
         post.setScore(post.getScore() + 1);
+
+        userRepository.save(user);
+        groupRepository.save(bookGroup);
+        postRepository.save(post);
+
+        return bookGroup;
+    }
+
+    @Override
+    public Book_Group report(Long userId, Long groupId, Long postId) {
+        User user = userRepository.findOne(userId);
+        Book_Group bookGroup = groupRepository.findOne(groupId);
+        Post post = postRepository.findOne(postId);
+
+        if (user == null || bookGroup == null || post == null) {
+            return null;
+        }
+
+        if (post.getReported() == Reported.SAFE) {
+            post.setReported(Reported.WARNING);
+        } else if (post.getReported() == Reported.WARNING) {
+            post.setReported(Reported.DELETED);
+            post.setText("-- REPORTED POST --");
+            post.setScore(-100);
+        }
 
         userRepository.save(user);
         groupRepository.save(bookGroup);

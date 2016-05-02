@@ -18,4 +18,6 @@ public interface GroupService {
     Book_Group edit(Long userId, Long groupId, Long postId, String text);
 
     Book_Group upvote(Long userId, Long groupId, Long postId);
+
+    Book_Group report(Long userId, Long groupId, Long postId);
 }
