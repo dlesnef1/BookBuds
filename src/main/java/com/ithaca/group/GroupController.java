@@ -33,11 +33,27 @@ public class GroupController {
         return groupService.join(id.longValue(), groupId);
     }
 
-    @RequestMapping(value = "/{groupId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{groupId}/post", method = RequestMethod.POST)
     public Book_Group post(HttpServletRequest request, @PathVariable Long groupId, @RequestParam String text) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
         return groupService.post(id.longValue(), groupId, text);
+    }
+
+    @RequestMapping(value = "/{groupId}/{postId}", method = RequestMethod.POST)
+    public Book_Group reply(HttpServletRequest request, @PathVariable Long groupId, @PathVariable Long postId, @RequestParam String text) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return groupService.reply(id.longValue(), groupId, postId, text);
+    }
+
+    @RequestMapping(value = "/{groupId}/{postId}", method = RequestMethod.PUT)
+    public Book_Group edit(HttpServletRequest request, @PathVariable Long groupId, @PathVariable Long postId, @RequestParam String text) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return groupService.edit(id.longValue(), groupId, postId, text);
     }
 }

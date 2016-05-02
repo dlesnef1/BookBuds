@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 /**
  * Created by David on 4/28/16.
  */
-
 @Service
 public class GroupServiceImpl implements GroupService {
 
@@ -82,10 +81,52 @@ public class GroupServiceImpl implements GroupService {
         }
 
         Post post = new Post(user, bookGroup, text,
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()), null);
 
         user.getPosts().add(post);
         bookGroup.getPosts().add(post);
+
+        userRepository.save(user);
+        groupRepository.save(bookGroup);
+        postRepository.save(post);
+
+        return bookGroup;
+    }
+
+    @Override
+    public Book_Group reply(Long userId, Long groupId, Long postId, String text) {
+        User user = userRepository.findOne(userId);
+        Book_Group bookGroup = groupRepository.findOne(groupId);
+        Post parent = postRepository.findOne(postId);
+
+        if (user == null || bookGroup == null || parent == null) {
+            return null;
+        }
+
+        Post child = new Post(user, null, text,
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()), parent);
+        parent.getChildren().add(child);
+
+        user.getPosts().add(child);
+
+        userRepository.save(user);
+        groupRepository.save(bookGroup);
+        postRepository.save(parent);
+        postRepository.save(child);
+
+        return bookGroup;
+    }
+
+    @Override
+    public Book_Group edit(Long userId, Long groupId, Long postId, String text) {
+        User user = userRepository.findOne(userId);
+        Book_Group bookGroup = groupRepository.findOne(groupId);
+        Post post = postRepository.findOne(postId);
+
+        if (user == null || bookGroup == null || post == null || !user.getPosts().contains(post)) {
+            return null;
+        }
+        post.setText(text);
 
         userRepository.save(user);
         groupRepository.save(bookGroup);

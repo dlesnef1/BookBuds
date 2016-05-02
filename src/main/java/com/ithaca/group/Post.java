@@ -5,6 +5,8 @@ import com.ithaca.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by David on 4/25/16.
@@ -29,14 +31,30 @@ public class Post {
     @NotNull
     private String created;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Post parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Post> children;
+
     public Post() {
     }
 
-    public Post(User user, Book_Group bookGroup, String text, String created) {
+    public Post(User user, Book_Group bookGroup, String text, String created, Post parent) {
         this.bookGroup = bookGroup;
         this.user = user;
         this.text = text;
         this.created = created;
+        this.parent = parent;
+        this.children = new ArrayList<>();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @JsonIgnore
@@ -70,5 +88,22 @@ public class Post {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    @JsonIgnore
+    public Post getParent() {
+        return parent;
+    }
+
+    public void setParent(Post parent) {
+        this.parent = parent;
+    }
+
+    public List<Post> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Post> children) {
+        this.children = children;
     }
 }
