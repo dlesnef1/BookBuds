@@ -72,6 +72,18 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public Book_Group find(Long userId, Long groupId) {
+        User user = userRepository.findOne(userId);
+        Book_Group bookGroup = groupRepository.findOne(groupId);
+
+        if (user == null || bookGroup == null) {
+            return null;
+        }
+
+        return bookGroup;
+    }
+
+    @Override
     public Book_Group post(Long userId, Long groupId, String text) {
         User user = userRepository.findOne(userId);
         Book_Group bookGroup = groupRepository.findOne(groupId);

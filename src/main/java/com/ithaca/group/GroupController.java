@@ -33,6 +33,14 @@ public class GroupController {
         return groupService.join(id.longValue(), groupId);
     }
 
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.GET)
+    public Book_Group find(HttpServletRequest request, @PathVariable Long groupId) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return groupService.find(id.longValue(), groupId);
+    }
+
     @RequestMapping(value = "/{groupId}/post", method = RequestMethod.POST)
     public Book_Group post(HttpServletRequest request, @PathVariable Long groupId, @RequestParam String text) {
         Claims claims = (Claims) request.getAttribute("claims");

@@ -9,6 +9,8 @@ public interface GroupService {
 
     Book_Group join(Long userId, Long groupId);
 
+    Book_Group find(Long userId, Long groupId);
+
     Book_Group post(Long userId, Long groupId, String text);
 
     Book_Group reply(Long userId, Long groupId, Long postId, String text);
