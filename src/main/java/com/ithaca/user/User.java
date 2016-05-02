@@ -1,6 +1,9 @@
 package com.ithaca.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ithaca.book.Book;
+import com.ithaca.group.Book_Group;
+import com.ithaca.group.Post;
 import com.ithaca.message.Message;
 import com.ithaca.message.Thread;
 
@@ -33,11 +36,17 @@ public class User {
     @NotNull
     private String securityAnswer;
 
-    @OneToMany (mappedBy="user")
-    private List<Message> messages;
-
     @ManyToMany(mappedBy="users")
     private List<Thread> threads;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Book_Group> book_groups;
+
+    @OneToMany(mappedBy="user")
+    private List<Message> messages;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     public User() {
     }
@@ -47,6 +56,9 @@ public class User {
         this.password = password;
         this.messages = new ArrayList<>();
         this.threads = new ArrayList<>();
+        this.messages = new ArrayList<>();
+        this.book_groups = new ArrayList<>();
+        this.posts = new ArrayList<>();
     }
 
     public User(String name, String password, String securityQuestion, String securityAnswer) {
@@ -56,6 +68,9 @@ public class User {
         this.securityAnswer = securityAnswer;
         this.messages = new ArrayList<>();
         this.threads = new ArrayList<>();
+        this.messages = new ArrayList<>();
+        this.book_groups = new ArrayList<>();
+        this.posts = new ArrayList<>();
     }
 
     public Long getId() {
@@ -110,5 +125,23 @@ public class User {
 
     public void setThreads(List<Thread> threads) {
         this.threads = threads;
+    }
+
+    @JsonIgnore
+    public List<Book_Group> getBook_groups() {
+        return book_groups;
+    }
+
+    public void setBook_groups(List<Book_Group> book_groups) {
+        this.book_groups = book_groups;
+    }
+
+    @JsonIgnore
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

@@ -3,7 +3,10 @@ package com.ithaca;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -18,6 +21,8 @@ public class BookBudsApplication {
 		registrationBean.addUrlPatterns("/users/account");
 		registrationBean.addUrlPatterns("/messages");
 		registrationBean.addUrlPatterns("/messages/*");
+		registrationBean.addUrlPatterns("/groups");
+		registrationBean.addUrlPatterns("/groups/*");
 		return registrationBean;
 	}
 
