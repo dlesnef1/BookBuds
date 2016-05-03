@@ -1,6 +1,5 @@
 package com.ithaca.group;
 
-import com.ithaca.book.Book;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
