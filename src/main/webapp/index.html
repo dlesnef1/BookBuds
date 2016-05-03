@@ -18,7 +18,7 @@
     <div ng-show="!loggedIn()">
         Please log in:</br>
         <form ng-submit="login()">
-            Username: <input type="text" ng-model="userName"/><span><br>
+            Username: <input type="text" ng-model="userName"/><span><br></span>
             Password: <input type="password" ng-model="password"/><br>
             <input type="submit" value="Login"/>
         </form>
@@ -26,12 +26,11 @@
         <br><br>
         Create an account:<br>
         <form ng-submit="createAccount()">
-            Username: <input type="text" ng-model="userName"/><span><br>
+            Username: <input type="text" ng-model="userName"/><span><br></span>
                 Password: <input type="password" ng-model="password"/><br>
                 Question: <input type="text" ng-model="question"/><br>
                 Answer: <input type="text" ng-model="answer"/><br>
                 <input type="submit" value="Create Account"/>
-
         </form>
     </div>
     <div class="alert alert-danger" role="alert" ng-show="error.data.message">
@@ -46,7 +45,6 @@
                 <a href ng-click="logout()">(logout)</a>
             </div>
             <div class="col-md-4">
-
                 <form ng-submit="getAccountDetails()">
                     <input type="submit" value="Get Account Details"/>
                 </form>
@@ -54,7 +52,17 @@
                     <div class="col-sm-4">{{userName}} is a member of BookBuds</div>
                 </div>
             </div>
+
+            Enter username to send message to:
+            <form ng-submit="createMessage()">
+                Username: <input type="text" ng-model="recipient"/>
+                Message: <input type="text" ng-model="message"/>
+                <input type="submit" value="createMessage"/>
+            </form>
         </div>
     </div>
+
+
+</div>
 </body>
 </html>
