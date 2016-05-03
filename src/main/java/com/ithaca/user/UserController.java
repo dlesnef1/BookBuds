@@ -1,5 +1,7 @@
 package com.ithaca.user;
 
+import com.ithaca.group.Book_Group;
+import com.ithaca.message.Thread;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +27,28 @@ public class UserController {
     @Autowired
     UserHelper userHelper;
 
-    @RequestMapping
-    public List<User> all() {
-        return userService.all();
-    }
-
     @RequestMapping("/account")
     public User find(HttpServletRequest request) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
         return userService.find(id.longValue());
+    }
+
+    @RequestMapping("/groups")
+    public List<Book_Group> findGroups(HttpServletRequest request) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return userService.findGroups(id.longValue());
+    }
+
+    @RequestMapping("/threads")
+    public List<Thread> findThreads(HttpServletRequest request) {
+        Claims claims = (Claims) request.getAttribute("claims");
+        Integer id = (Integer) claims.get("id");
+
+        return userService.findThreads(id.longValue());
     }
 
     @RequestMapping(method = RequestMethod.POST)

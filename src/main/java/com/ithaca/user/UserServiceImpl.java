@@ -1,5 +1,7 @@
 package com.ithaca.user;
 
+import com.ithaca.group.Book_Group;
+import com.ithaca.message.Thread;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,28 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public List<User> all() {
-        return (List<User>) userRepository.findAll();
+    public User find(Long id) {
+        return userRepository.findOne(id);
     }
 
     @Override
-    public User find(Long id) {
-        return userRepository.findOne(id);
+    public List<Book_Group> findGroups(Long userId) {
+        User user = userRepository.findOne(userId);
+        if (user == null) {
+            return null;
+        }
+
+        return user.getBook_groups();
+    }
+
+    @Override
+    public List<Thread> findThreads(Long userId) {
+        User user = userRepository.findOne(userId);
+        if (user == null) {
+            return null;
+        }
+
+        return user.getThreads();
     }
 
     @Override
