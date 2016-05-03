@@ -7,10 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by David on 4/25/16.
- */
-
-/**
  * The controller that provides end points for books. This is not for book groups, this is for the actual books stored in the DB.
  */
 @RestController
@@ -37,7 +33,8 @@ public class BookController {
      */
     @RequestMapping("/{id}")
     public Book findBook(@PathVariable Long id) {
-        return bookService.findBook(id);
+        Book book = bookService.findBook(id);
+        return book;
     }
 
     /**
