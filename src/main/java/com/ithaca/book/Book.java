@@ -21,11 +21,11 @@ public class Book {
     private Long id;
 
     @NotNull
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String title;
 
     @NotNull
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String author;
 
     @NotNull
@@ -37,10 +37,10 @@ public class Book {
     @NotNull
     private String date;
 
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String imageUrl;
 
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String description;
 
     @OneToMany(mappedBy = "book")
