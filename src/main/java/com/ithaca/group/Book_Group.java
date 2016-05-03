@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by David on 4/19/16.
+ * The book group entity. A book group has an id, a list of posts, a book associated with the group, and a list of users.
+ * Ideally this class would have just been called Group, but our ORM does not allow entities to be called Group.
  */
-
 @Entity
 public class Book_Group {
 
@@ -18,14 +18,14 @@ public class Book_Group {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy="bookGroup")
+    @OneToMany(mappedBy = "bookGroup")
     private List<Post> posts;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Book book;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="book_group_user", joinColumns=@JoinColumn(name="book_group_id"), inverseJoinColumns=@JoinColumn(name="user_id"))
+    @JoinTable(name = "book_group_user", joinColumns = @JoinColumn(name = "book_group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
     public Book_Group() {
@@ -49,10 +49,6 @@ public class Book_Group {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
     public Book getBook() {
         return book;
     }
@@ -63,9 +59,5 @@ public class Book_Group {
 
     public List<User> getUsers() {
         return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 }
