@@ -8,17 +8,18 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
         $scope.greeting = 'BookBuddaroos';
         $scope.token = null;
         $scope.error = null;
+        $scope.threadCreated = false;
 
 
-        $scope.login = function() {
+        $scope.login = function () {
             $scope.error = null;
-            mainService.login($scope.userName, $scope.password).then(function(token) {
+            mainService.login($scope.userName, $scope.password).then(function (token) {
                     $scope.token = token;
-                    console.log("token="+ token);
+                    console.log("token=" + token);
                     $http.defaults.headers.common.Authorization = 'Bearer ' + token;
-                    
+
                 },
-                function(error){
+                function (error) {
                     $scope.error = error;
                     $scope.userName = '';
                     $scope.password = '';
@@ -26,15 +27,15 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
                     $scope.answer = '';
                 });
         }
-        $scope.createAccount = function() {
+        $scope.createAccount = function () {
             $scope.error = null;
-            mainService.createAccount($scope.userName, $scope.password, $scope.question, $scope.answer).then(function(token){
+            mainService.createAccount($scope.userName, $scope.password, $scope.question, $scope.answer).then(function (token) {
                     $scope.token = token;
-                    console.log("token="+token);
+                    console.log("token=" + token);
 
                     $http.defaults.headers.common.Authorization = 'Bearer ' + token;
                 },
-                function(error){
+                function (error) {
                     $scope.error = error;
                     $scope.userName = '';
                     $scope.password = '';
@@ -42,20 +43,19 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
                     $scope.answer = '';
                 });
         }
-        $scope.getAccountDetails = function() {
+        $scope.getAccountDetails = function () {
             $scope.error = null;
-            mainService.getAccountDetails().then(function(data){
+            mainService.getAccountDetails().then(function (data) {
                     $scope.data = data;
-                    console.log("user ID="+data);
+                    console.log("user ID=" + data);
                 },
-                function(error){
+                function (error) {
                     $scope.error = error;
                 });
         }
 
 
-
-        $scope.logout = function() {
+        $scope.logout = function () {
             $scope.userName = '';
             $scope.password = '';
             $scope.question = '';
@@ -64,10 +64,76 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
             $http.defaults.headers.common.Authorization = '';
         }
 
-        $scope.loggedIn = function() {
+        $scope.loggedIn = function () {
             return $scope.token !== null;
         }
 
+
+        $scope.findThread = function () {
+            $scope.error = null;
+            mainService.findThread($scope.thread, $scope.userName, $http).then(function (token) {
+                    $scope.token = token;
+                    console.log("userName=" + userName);
+                    console.log("data=" + data)
+                },
+                function (error) {
+                    $scope.error = error;
+                    $scope.userName = '';
+                    $scope.thread = '';
+                    $scope.message = '';
+                    $scope.created = '';
+                });
+        }
+        $scope.createMessage = function () {
+            $scope.error = null;
+            mainService.createMessage($scope.userName, $scope.thread, $scope.message, $scope.created).then(function (token) {
+                    $scope.token = token;
+                    console.log("token=" + token);
+
+                },
+                function (error) {
+                    $scope.error = error;
+                    $scope.userName = '';
+                    $scope.thread = '';
+                    $scope.message = '';
+                    $scope.created = '';
+                });
+
+            $scope.threadCreated = function () {
+                return $scope.thread !== null;
+            }
+        }
+        $scope.edit = function () {
+            $scope.error = null;
+            mainService.edit($scope.userName, $scope.message).then(function (token) {
+                    $scope.token = token;
+
+                },
+                function (error) {
+                    $scope.error = error;
+                    $scope.userName = '';
+                    $scope.thread = '';
+                    $scope.message = '';
+                    $scope.created = '';
+                });
+        }
+        $scope.delete = function () {
+            $scope.error = null;
+            mainService.delete($scope.userName, $scope.message).then(function (token) {
+
+                },
+                function (error) {
+                    $scope.error = error;
+                    $scope.userName = '';
+                    $scope.thread = '';
+                    $scope.message = '';
+                    $scope.created = '';
+                });
+        }
+
+        $scope.threadCreated = function () {
+            return $scope.message !== null;
+        }
     }
 ]);
 
@@ -109,94 +175,8 @@ appModule.service('mainService', function($http) {
                 console.log("response.data.id = " + response.data.id);
                 return response.data.id;
             });
-        }
+        },
 
-    }
-});
-
-
-
-
-
-    appModule.controller('messageController', ['messages','$scope','$http',
-        function(messages, $scope, $http) {
-            $scope.greeting = 'IndividualMessaging: ';
-            $scope.token = null;
-            $scope.error = null;
-            $scope.threadCreated = false;
-
-
-            $scope.findThread = function () {
-                $scope.error = null;
-                messages.findThread($scope.thread, $scope.userName, $http).then(function (token) {
-                        $scope.token = token;
-                        console.log("userName="+userName);
-                        console.log("data="+data)
-                    },
-                    function (error) {
-                        $scope.error = error;
-                        $scope.userName = '';
-                        $scope.thread = '';
-                        $scope.message = '';
-                        $scope.created = '';
-                    });
-            }
-            $scope.createMessage = function() {
-                $scope.error = null;
-                messages.createMessage( $scope.userName, $scope.thread, $scope.message, $scope.created).then(function(token){
-                        $scope.token = token;
-                        console.log("token="+token);
-
-                    },
-                    function(error){
-                        $scope.error = error;
-                        $scope.userName = '';
-                        $scope.thread = '';
-                        $scope.message = '';
-                        $scope.created = '';
-                    });
-
-                $scope.threadCreated = function() {
-                    return $scope.thread !== null;
-                }
-            }
-            $scope.edit = function() {
-                $scope.error = null;
-                messages.edit($scope.userName, $scope.message).then(function(token){
-                        $scope.token = token;
-
-                    },
-                    function(error){
-                        $scope.error = error;
-                        $scope.userName = '';
-                        $scope.thread = '';
-                        $scope.message = '';
-                        $scope.created = '';
-                    });
-            }
-            $scope.delete = function() {
-                $scope.error = null;
-                messages.delete($scope.userName, $scope.message).then(function(token){
-
-                    },
-                    function(error){
-                        $scope.error = error;
-                        $scope.userName = '';
-                        $scope.thread = '';
-                        $scope.message = '';
-                        $scope.created = '';
-                    });
-            }
-
-            $scope.threadCreated = function() {
-                return $scope.message !== null;
-            }
-
-        }
-    ]);
-
-appModule.service('messageController', function($http) {
-    return {
         findThread: function (thread, username) {
             var data = "threadCreated=" + threadCreated() + "name=" + username;
 
@@ -232,4 +212,5 @@ appModule.service('messageController', function($http) {
             });
         }
     }
+
 });
