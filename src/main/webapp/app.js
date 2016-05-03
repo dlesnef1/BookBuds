@@ -184,8 +184,8 @@ appModule.service('mainService', function($http) {
             var data = "recipient=" + username + "&text=" + message;
             console.log("Data ugh = " + data);
             return $http.post('http://localhost:8080/messages', data).then(function (response) {
-                console.log("response.data = " + response.data);
-                return response.data;
+                console.log(response);
+                return response;
             });
         },
         edit: function (username, id, message) {
