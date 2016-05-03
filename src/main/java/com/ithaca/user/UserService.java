@@ -1,5 +1,8 @@
 package com.ithaca.user;
 
+import com.ithaca.group.Book_Group;
+import com.ithaca.message.Thread;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +11,11 @@ import java.util.Map;
  */
 public interface UserService {
 
-    List<User> all();
-
     User find(Long id);
+
+    List<Book_Group> findGroups(Long userId);
+
+    List<Thread> findThreads(Long userId);
 
     User create(String name, String password, String question, String answer);
 

@@ -26,21 +26,6 @@ public class UserServiceTest {
     private UserServiceImpl userService;
 
     @Test
-    public void allTest() {
-        when(userRepository.findAll()).thenReturn(new ArrayList<User>());
-        Assert.assertEquals(0, userService.all().size());
-
-        List<User> users = new ArrayList<>();
-        users.add(new User("one", "password1"));
-        users.add(new User("two", "password2"));
-
-        when(userRepository.findAll()).thenReturn(users);
-
-        Assert.assertEquals(2, userService.all().size());
-        Assert.assertEquals("two", userService.all().get(1).getName());
-    }
-
-    @Test
     public void createTest() {
         User saved = new User("four", "password4");
         when(userRepository.findByName(saved.getName())).thenReturn(saved);

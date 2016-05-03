@@ -26,20 +26,6 @@ public class UserControllerTest {
     @InjectMocks private UserController userController;
 
     @Test
-    public void allTest() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("user1", "pass1"));
-        users.add(new User("user2", "pass2"));
-        when(userService.all()).thenReturn(users);
-
-        List<User> all = userController.all();
-
-        Assert.assertEquals(2, all.size());
-        Assert.assertEquals("user1", all.get(0).getName());
-        Assert.assertEquals("pass2", all.get(1).getPassword());
-    }
-
-    @Test
     public void findTest() {
 
         HttpServletRequest request = mock(HttpServletRequest.class);
