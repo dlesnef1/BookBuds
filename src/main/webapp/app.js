@@ -10,7 +10,6 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
         $scope.error = null;
         $scope.threadCreated = false;
 
-
         $scope.login = function () {
             $scope.error = null;
             mainService.login($scope.userName, $scope.password).then(function (token) {
@@ -71,32 +70,29 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
 
         $scope.findThread = function () {
             $scope.error = null;
-            mainService.findThread($scope.thread, $scope.userName, $http).then(function (token) {
+            mainService.findThread($scope.recipient, $scope.message).then(function (token) {
                     $scope.token = token;
-                    console.log("userName=" + userName);
+                    console.log("userName=" + recipient);
                     console.log("data=" + data)
                 },
                 function (error) {
                     $scope.error = error;
-                    $scope.userName = '';
-                    $scope.thread = '';
+                    $scope.recipient = '';
                     $scope.message = '';
-                    $scope.created = '';
                 });
         }
         $scope.createMessage = function () {
             $scope.error = null;
-            mainService.createMessage($scope.userName, $scope.thread, $scope.message, $scope.created).then(function (token) {
-                    $scope.token = token;
-                    console.log("token=" + token);
+            mainService.createMessage($scope.recipient, $scope.message).then(function (message) {
+
+                    console.log("text=" + message);
+                    console.log("success");
 
                 },
                 function (error) {
                     $scope.error = error;
-                    $scope.userName = '';
-                    $scope.thread = '';
+                    $scope.recipient = '';
                     $scope.message = '';
-                    $scope.created = '';
                 });
 
             $scope.threadCreated = function () {
@@ -105,7 +101,7 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
         }
         $scope.edit = function () {
             $scope.error = null;
-            mainService.edit($scope.userName, $scope.message).then(function (token) {
+            mainService.edit($scope.recipient, $scope.message).then(function (token) {
                     $scope.token = token;
 
                 },
@@ -119,15 +115,15 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
         }
         $scope.delete = function () {
             $scope.error = null;
-            mainService.delete($scope.userName, $scope.message).then(function (token) {
+            mainService.delete($scope.recipient, $scope.message).then(function (token) {
 
                 },
                 function (error) {
                     $scope.error = error;
-                    $scope.userName = '';
-                    $scope.thread = '';
+                    $scope.recipient = '';
+
                     $scope.message = '';
-                    $scope.created = '';
+
                 });
         }
 
@@ -170,43 +166,40 @@ appModule.service('mainService', function($http) {
         getAccountDetails: function () {
             var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
 
-
             return $http.get('http://localhost:8080/users/account').then(function (response) {
                 console.log("response.data.id = " + response.data.id);
                 return response.data.id;
             });
         },
 
-        findThread: function (thread, username) {
-            var data = "threadCreated=" + threadCreated() + "name=" + username;
+        findThread: function (username) {
+            var data = "recipient=" + username;
 
-            return $http.get('http://localhost:8080/users/messages').then(function (response) {
+            return $http.get('http://localhost:8080/messages').then(function (response) {
                 console.log("response.data.id = " + response.data.id);
                 return response.data.id;
             });
         },
-        createMessage: function (thread, username, message) {
-            threadCreated == true;
-            var data = "threadCreated=" + threadCreated() + "name=" + username + "message=" + message;
+        createMessage: function (username, message) {
+            var data = "recipient=" + username + "&text=" + message;
+            console.log("Data ugh = " + data);
+            return $http.post('http://localhost:8080/messages', data).then(function (response) {
+                console.log("response.data = " + response.data);
+                return response.data;
+            });
+        },
+        edit: function (username, id, message) {
+            var data = "recipient=" + username + "messageId=" + id + "text=" + message;
 
-            return $http.post('http://localhost:8080/users/messages').then(function (response) {
-                console.log("response.data.id = " + response.data.id);
+            return $http.put('http://localhost:8080/messages').then(function (response) {
+                console.log("response.data = " + response.data);
                 return response.data.id;
             });
         },
-        edit: function (thread, username, message, newMessage) {
-            var data = "threadCreated=" + threadCreated() + "name=" + username + "message=" + message + "new Message=" + newMessage;
+        delete: function (id) {
+            var data = "messageId=" + id;
 
-            return $http.put('http://localhost:8080/users/messages').then(function (response) {
-                console.log("response.data.id = " + response.data.id);
-                return response.data.id;
-            });
-        },
-        delete: function (thread, username, message) {
-            var data = "threadCreated=" + threadCreated() + "name=" + username + "message=" + message;
-
-
-            return $http.put('http://localhost:8080/users/messages').then(function (response) {
+            return $http.put('http://localhost:8080/messages').then(function (response) {
                 console.log("response.data.id = " + response.data.id);
                 return response.data.id;
             });
