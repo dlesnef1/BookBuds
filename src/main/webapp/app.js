@@ -84,9 +84,8 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
         $scope.createMessage = function () {
             $scope.error = null;
             mainService.createMessage($scope.recipient, $scope.message).then(function (message) {
-
+                    //$scope.message = message;
                     console.log("text=" + message);
-                    console.log("success");
 
                 },
                 function (error) {
@@ -94,11 +93,9 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
                     $scope.recipient = '';
                     $scope.message = '';
                 });
-
-            $scope.threadCreated = function () {
-                return $scope.thread !== null;
-            }
         }
+
+
         $scope.edit = function () {
             $scope.error = null;
             mainService.edit($scope.recipient, $scope.message).then(function (token) {
@@ -182,12 +179,13 @@ appModule.service('mainService', function($http) {
         },
         createMessage: function (username, message) {
             var data = "recipient=" + username + "&text=" + message;
-            console.log("Data ugh = " + data);
             return $http.post('http://localhost:8080/messages', data).then(function (response) {
                 console.log(response);
+                alert(message);
                 return response;
             });
         },
+
         edit: function (username, id, message) {
             var data = "recipient=" + username + "messageId=" + id + "text=" + message;
 

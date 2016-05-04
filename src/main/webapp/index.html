@@ -179,31 +179,64 @@
     <section id="messaging" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <div ng-show="!loggedIn()"></div>
 
-                    when not logged in
-
-                <h2>*~Messaging</h2>
+                <h2>Messaging</h2>
+                <div ng-show="!loggedIn()">
+                    <h2>Create an account or log in to message other BookBuds users!</h2>
+                </div>
 
                 <div ng-show="loggedIn()">
 
+                    this is the {{message}}
 
-                        Enter username to send message to:
-                        <form ng-submit="createMessage()">
-                            Username: <input type="text" ng-model="recipient"/>
-                            Message: <input type="text" ng-model="message"/>
-                            <input type="submit" value="createMessage"/>
-                        </form>
-                    </div>
+                    Enter username to send message to:
+                    <form ng-submit="createMessage()" onsubmit="viewMessage()">
+                        Username: <input type="text" ng-model="recipient"/>
+                        Message: <input type="text" ng-model="message"/>
+                        <input type="submit" value="createMessage"/>
+                    </form>
+
+
+                    <script>
+                        function viewMessage() {
+                            alert("You sent a message!");
+                        }
+                    </script>
+                    <table class="table">
+
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Message</th>
+                            <th>Time Stamp</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{recipient}}</td>
+                            <td>{{message}}</td>
+                            <td>{{id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mary</td>
+                            <td>Moe</td>
+                            <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>July</td>
+                            <td>Dooley</td>
+                            <td>july@example.com</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
                 </div>
-                
-        
             </div>
         </div>
     </section>
-    
 
-    <!-- Messaging Section -->
+    <!-- account details Section -->
     <section id="contact" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
