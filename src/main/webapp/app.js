@@ -3,12 +3,14 @@
  */
 var appModule = angular.module('myApp', []);
 
-appModule.controller('MainCtrl', ['mainService','$scope','$http',
-    function(mainService, $scope, $http) {
-        $scope.greeting = 'BookBuddaroos';
+appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
+    function (mainService, $scope, $http) {
+        $scope.greeting = 'Welcome to BookBuds';
         $scope.token = null;
         $scope.error = null;
-        $scope.threadCreated = false;
+        $scope.searched = false;
+        $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
 
         $scope.login = function () {
             $scope.error = null;
@@ -25,7 +27,7 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
                     $scope.question = '';
                     $scope.answer = '';
                 });
-        }
+        };
         $scope.createAccount = function () {
             $scope.error = null;
             mainService.createAccount($scope.userName, $scope.password, $scope.question, $scope.answer).then(function (token) {
@@ -41,7 +43,7 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
                     $scope.question = '';
                     $scope.answer = '';
                 });
-        }
+        };
         $scope.getAccountDetails = function () {
             $scope.error = null;
             mainService.getAccountDetails().then(function (data) {
@@ -51,7 +53,7 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
                 function (error) {
                     $scope.error = error;
                 });
-        }
+        };
 
 
         $scope.logout = function () {
@@ -61,10 +63,32 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
             $scope.answer = '';
             $scope.token = null;
             $http.defaults.headers.common.Authorization = '';
-        }
+        };
 
         $scope.loggedIn = function () {
-            return $scope.token !== null;
+            return $scope.token !== null && $scope.token !== undefined;
+        };
+
+        $scope.currentlySearching = function () {
+            return $scope.searched == true;
+        };
+
+        $scope.sendSearch = function () {
+            $scope.error = null;
+            mainService.search($scope.searchTerm).then(function (results) {
+                    console.log("in ctrl: " + results.data);
+                    $scope.searched = true;
+                console.log($scope.searched);
+
+                },
+                function (error) {
+                    $scope.error = error;
+                    $scope.searched = false;
+                });
+        };
+
+        $scope.endSearching = function () {
+            $scope.searched == false;
         }
 
 
@@ -134,8 +158,7 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
 ]);
 
 
-
-appModule.service('mainService', function($http) {
+appModule.service('mainService', function ($http) {
     return {
         login: function (username, password) {
             var data = "name=" + username + "&password=" + password;
@@ -164,11 +187,20 @@ appModule.service('mainService', function($http) {
         },
 
         getAccountDetails: function () {
-            var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
+            //var data = "Authorization	: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwiaWQiOjF9.KhStwKp6-ma3ZxYI8EhLD8oRHz8AVnWNJC37-QljOMc'";
 
             return $http.get('http://localhost:8080/users/account').then(function (response) {
                 console.log("response.data.id = " + response.data.id);
                 return response.data.id;
+            });
+        },
+
+        search: function (searchTerm) {
+            var data = "title=" + searchTerm;
+            console.log(data);
+            return $http.post('http://localhost:8080/books', data).then(function (response) {
+                console.log(response.data);
+                return response;
             });
         },
 

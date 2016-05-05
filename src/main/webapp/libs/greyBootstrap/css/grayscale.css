@@ -143,6 +143,31 @@ a:focus {
     }
 }
 
+.search {
+    padding-top: 10px;
+}
+
+
+input.searchField {
+    background-color: inherit;
+    /*background-image: url(../img/logoWhite.png);*/
+    background-size: auto;
+    margin-right: 0px;
+    margin-bottom: 10px;
+
+}
+
+input.searchButton {
+    background-color: inherit;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+input{
+    background-color: #3c3c3c;
+    margin: 10px;
+}
+
 .intro {
     display: table;
     width: 100%;
@@ -265,9 +290,7 @@ a:focus {
     padding-top: 100px;
 }
 
-input{
-    color: #1d9b6c;
-}
+
 
 .download-section {
     width: 100%;
