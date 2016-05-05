@@ -45,56 +45,55 @@
 
 <!-- Navigation -->
 <div ng-controller='MainCtrl'>
-    <div ng-show="!currentlySearching()">
+
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <form ng-submit='sendSearch()' class="search">
+                    <input type="text" ng-model="searchTerm" class="searchField" placeholder="Search for Books"/>
+                    <input type="submit" class="searchButton" value="send it"/>
+                </form>
 
 
-        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse"
-                            data-target=".navbar-main-collapse">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                <!--<a class="navbar-brand page-scroll" href="#page-top">-->
+                <!--<i class="glyphicon glyphicon-search"></i>  <span class="light">Search</span> BookBuds-->
+                <!--</a>-->
 
-                    <form ng-submit='sendSearch()' class="search">
-                        <input type="text" ng-model="searchTerm" class="searchField" placeholder="Search for Books"/>
-                        <input type="submit" class="searchButton" value="send it"/>
-                    </form>
-
-
-                    <!--<a class="navbar-brand page-scroll" href="#page-top">-->
-                    <!--<i class="glyphicon glyphicon-search"></i>  <span class="light">Search</span> BookBuds-->
-                    <!--</a>-->
-
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-
-
-                    <ul class="nav navbar-nav">
-                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#about">About</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#download">BookGroups</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#messaging">Messaging</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#contact">Account</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
             </div>
-        </nav>
-        <!-- /.container -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+
+
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#download">BookGroups</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#messaging">Messaging</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Account</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <!-- /.container -->
+    <div ng-show="!currentlySearching()">
 
 
         <!-- Intro Header -->
@@ -251,6 +250,20 @@
     </div>
 
     <!---BEGIN SEARCH RESULTS SECTION--->
+    <!---Still in controller--->
+    <div ng-show="currentlySearching()">
+        <section id="resultsTop" class="container content-section text-left">
+            <form ng-submit="endSearching()">
+                <input type="submit" class="submitButton" value="Return to Home"/>
+            </form>
+
+            <ul ng-repeat="book in books">
+                <li>{{book}}</li>
+            </ul>
+        </section>
+
+    </div>
+
 
 </div>
 

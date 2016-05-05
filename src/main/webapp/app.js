@@ -9,6 +9,7 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         $scope.token = null;
         $scope.error = null;
         $scope.searched = false;
+        $scope.books = null;
         $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 
@@ -78,7 +79,7 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
             mainService.search($scope.searchTerm).then(function (results) {
                     console.log("in ctrl: " + results.data);
                     $scope.searched = true;
-                console.log($scope.searched);
+                    $scope.books = results.data;
 
                 },
                 function (error) {
@@ -88,7 +89,7 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         };
 
         $scope.endSearching = function () {
-            $scope.searched == false;
+            $scope.searched = false;
         }
 
 
