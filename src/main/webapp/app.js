@@ -10,6 +10,8 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         $scope.error = null;
         $scope.searched = false;
         $scope.books = null;
+        $scope.searchTerm = null;
+        $scope.bookId = null;
         $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 
@@ -18,7 +20,9 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
             mainService.login($scope.userName, $scope.password).then(function (token) {
                     $scope.token = token;
                     console.log("token=" + token);
+
                     $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+
 
                 },
                 function (error) {
@@ -77,7 +81,6 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         $scope.sendSearch = function () {
             $scope.error = null;
             mainService.search($scope.searchTerm).then(function (results) {
-                    console.log("in ctrl: " + results.data);
                     $scope.searched = true;
                     $scope.books = results.data;
 
@@ -90,7 +93,14 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
 
         $scope.endSearching = function () {
             $scope.searched = false;
-        }
+        };
+
+        $scope.makeGroup = function () {
+            $scope.error = null;
+            mainService.makeGroup($scope.bookId).then(function (response) {
+                console.log(response);
+            });
+        };
 
 
         $scope.findThread = function () {
@@ -198,9 +208,22 @@ appModule.service('mainService', function ($http) {
 
         search: function (searchTerm) {
             var data = "title=" + searchTerm;
-            console.log(data);
+            //console.log(data);
             return $http.post('http://localhost:8080/books', data).then(function (response) {
-                console.log(response.data);
+                //console.log(response.data);
+                return response;
+            });
+        },
+
+        makeGroup: function (bookId) {
+            var data = "bookId=" + bookId;
+
+            $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+            //$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+            console.log(data);
+
+            return $http.post('http://localhost:8080/groups', data).then(function (response) {
+                console.log(response);
                 return response;
             });
         },
