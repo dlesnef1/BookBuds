@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by David on 4/5/16.
- */
 
 @Service
 public class MessageServiceImpl implements MessageService{

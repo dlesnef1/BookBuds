@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by David on 4/5/16.
+ * Thread entity which is the list of message between two users.
  */
 @Entity
 public class Thread {

@@ -2,6 +2,8 @@ package com.ithaca.message;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +22,18 @@ public class MessageController {
      *
      * @param request This is in the header of the HTTP request and is used for authenticating a user.
      * @param recipient The name of the other person the current user would like to see the thread between.
-     * @return The thread between the two users.
+     * @return The thread between the two users. Return a 400 error if user or recipient is null.
      */
     @RequestMapping
-    public Thread findThread(HttpServletRequest request, @RequestParam String recipient) {
+    public ResponseEntity<Thread> findThread(HttpServletRequest request, @RequestParam String recipient) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
-        return messageServiceImpl.findThread(id.longValue(), recipient);
+        Thread thread = messageServiceImpl.findThread(id.longValue(), recipient);
+        if (thread == null) {
+            return new ResponseEntity<Thread>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(thread);
     }
 
     /**
@@ -35,14 +41,18 @@ public class MessageController {
      * @param request This is in the header of the HTTP request and is used for authenticating a user.
      * @param recipient The name of the other person the current user wishes to message
      * @param text The message the user will add to the thread between the current user and the recipient.
-     * @return The thread between the two users with the new message added.
+     * @return The thread between the two users with the new message added. Return 400 if user/recip null.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public Thread create(HttpServletRequest request, String recipient, String text) {
+    public ResponseEntity<Thread> create(HttpServletRequest request, String recipient, String text) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
-        return messageServiceImpl.create(id.longValue(), recipient, text);
+        Thread thread = messageServiceImpl.create(id.longValue(), recipient, text);
+        if (thread == null) {
+            return new ResponseEntity<Thread>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(thread);
     }
 
     /**
@@ -50,14 +60,18 @@ public class MessageController {
      * @param request This is in the header of the HTTP request and is used for authenticating a user.
      * @param messageId The id of the message the user would like to edit
      * @param text The text the user would like to change the message too.
-     * @return The thread of the message the user currently just edited.
+     * @return The thread of the message the user currently just edited. Return 400 error if user is null or doesn't own message.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Thread edit(HttpServletRequest request, @PathVariable("id") Long messageId, @RequestParam String text) {
+    public ResponseEntity<Thread> edit(HttpServletRequest request, @PathVariable("id") Long messageId, @RequestParam String text) {
         Claims claims = (Claims) request.getAttribute("claims");
         Integer id = (Integer) claims.get("id");
 
-        return messageServiceImpl.edit(id.longValue(), messageId, text);
+        Thread thread = messageServiceImpl.edit(id.longValue(), messageId, text);
+        if (thread == null) {
+            return new ResponseEntity<Thread>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(thread);
     }
 
     /**
