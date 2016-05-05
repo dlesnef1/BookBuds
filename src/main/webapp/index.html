@@ -256,9 +256,28 @@
             <form ng-submit="endSearching()">
                 <input type="submit" class="submitButton" value="Return to Home"/>
             </form>
+            <h2>Search Results</h2>
 
-            <ul ng-repeat="book in books">
-                <li>{{book}}</li>
+            <ul ng-repeat="book in books" style="list-style: none">
+                <li>
+                    <div class="media">
+                        <a class="pull-left" href="#">
+                            <img class="media-object" src={{book.imageUrl}} alt="..." width="150px">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{book.title}}</h4> <h5> by {{book.author}}</h5>
+                            {{book.description}}
+                            <!-- MAKE A GROUP BUTTON -->
+                        </div>
+                        <!-- Groups Available-->
+                        
+                    </div>
+
+
+
+
+
+                </li>
             </ul>
         </section>
 
