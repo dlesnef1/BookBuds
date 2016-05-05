@@ -8,10 +8,11 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by David on 4/25/16.
- */
 
+/**
+ * The post entity. Used for adding a text-based post to a group. Contains text, time created, score, if it's reported, along
+ * with parent post and children posts under it, and the user/bookgroup it is associated with.
+ */
 @Entity
 public class Post {
 

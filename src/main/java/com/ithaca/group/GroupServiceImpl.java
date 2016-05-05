@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by David on 4/28/16.
- */
 @Service
 public class GroupServiceImpl implements GroupService {
 
