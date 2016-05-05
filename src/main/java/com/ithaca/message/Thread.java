@@ -19,10 +19,10 @@ public class Thread {
     private Long id;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="thread_user", joinColumns=@JoinColumn(name="thread_id"), inverseJoinColumns=@JoinColumn(name="user_id"))
+    @JoinTable(name = "thread_user", joinColumns = @JoinColumn(name = "thread_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
-    @OneToMany (mappedBy="thread")
+    @OneToMany(mappedBy = "thread")
     List<Message> messages;
 
     public Thread() {

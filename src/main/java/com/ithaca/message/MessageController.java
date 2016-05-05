@@ -19,8 +19,7 @@ public class MessageController {
     private MessageServiceImpl messageServiceImpl;
 
     /**
-     *
-     * @param request This is in the header of the HTTP request and is used for authenticating a user.
+     * @param request   This is in the header of the HTTP request and is used for authenticating a user.
      * @param recipient The name of the other person the current user would like to see the thread between.
      * @return The thread between the two users. Return a 400 error if user or recipient is null.
      */
@@ -37,10 +36,9 @@ public class MessageController {
     }
 
     /**
-     *
-     * @param request This is in the header of the HTTP request and is used for authenticating a user.
+     * @param request   This is in the header of the HTTP request and is used for authenticating a user.
      * @param recipient The name of the other person the current user wishes to message
-     * @param text The message the user will add to the thread between the current user and the recipient.
+     * @param text      The message the user will add to the thread between the current user and the recipient.
      * @return The thread between the two users with the new message added. Return 400 if user/recip null.
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -56,10 +54,9 @@ public class MessageController {
     }
 
     /**
-     *
-     * @param request This is in the header of the HTTP request and is used for authenticating a user.
+     * @param request   This is in the header of the HTTP request and is used for authenticating a user.
      * @param messageId The id of the message the user would like to edit
-     * @param text The text the user would like to change the message too.
+     * @param text      The text the user would like to change the message too.
      * @return The thread of the message the user currently just edited. Return 400 error if user is null or doesn't own message.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -75,8 +72,7 @@ public class MessageController {
     }
 
     /**
-     *
-     * @param request This is in the header of the HTTP request and is used for authenticating a user.
+     * @param request   This is in the header of the HTTP request and is used for authenticating a user.
      * @param messageId The id of the message the user would like to delete.
      * @return A boolean indicating whether the message was successfully deleted or not.
      */
