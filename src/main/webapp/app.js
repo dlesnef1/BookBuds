@@ -5,6 +5,9 @@ var appModule = angular.module('myApp', []);
 
 appModule.controller('MainCtrl', ['mainService','$scope','$http',
     function(mainService, $scope, $http) {
+
+        $scope.message = "no messages";
+
         $scope.greeting = 'BookBuddaroos';
         $scope.token = null;
         $scope.error = null;
@@ -70,7 +73,7 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
 
         $scope.findThread = function () {
             $scope.error = null;
-            mainService.findThread($scope.recipient, $scope.message).then(function (token) {
+            mainService.findThread($scope.recipient, $scope.message).then(function (recipient) {
                     $scope.token = token;
                     console.log("userName=" + recipient);
                     console.log("data=" + data)
@@ -84,8 +87,9 @@ appModule.controller('MainCtrl', ['mainService','$scope','$http',
         $scope.createMessage = function () {
             $scope.error = null;
             mainService.createMessage($scope.recipient, $scope.message).then(function (message) {
-                    //$scope.message = message;
-                    console.log("text=" + message);
+
+                console.log("text=" + message);
+                $scope.message = "you sent a message!"
 
                 },
                 function (error) {
@@ -153,7 +157,6 @@ appModule.service('mainService', function($http) {
             console.log(data)
             $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-
             return $http.post('http://localhost:8080/users', data).then(function (response) {
                 return response.data.token;
             });
@@ -181,7 +184,6 @@ appModule.service('mainService', function($http) {
             var data = "recipient=" + username + "&text=" + message;
             return $http.post('http://localhost:8080/messages', data).then(function (response) {
                 console.log(response);
-                alert(message);
                 return response;
             });
         },

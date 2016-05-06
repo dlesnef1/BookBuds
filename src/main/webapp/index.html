@@ -186,26 +186,16 @@
                 </div>
 
                 <div ng-show="loggedIn()">
-
-                    this is the {{message}}
-
                     Enter username to send message to:
-                    <form ng-submit="createMessage()" onsubmit="viewMessage()">
+                    <form ng-submit="findThread()">
                         Username: <input type="text" ng-model="recipient"/>
                         Message: <input type="text" ng-model="message"/>
-                        <input type="submit" value="createMessage"/>
+                        <input type="submit" value="send message"/>
                     </form>
 
-
-                    <script>
-                        function viewMessage() {
-                            alert("You sent a message!");
-                        }
-                    </script>
                     <table class="table">
-
                         <thead>
-                        <tr>
+                        <tr ng-repeat="thread in threads | orderBy : 'created'">
                             <th>Name</th>
                             <th>Message</th>
                             <th>Time Stamp</th>
@@ -213,23 +203,23 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>{{recipient}}</td>
+                            <td>{{username}}</td>
                             <td>{{message}}</td>
-                            <td>{{id}}</td>
+                            <td>{{created}}</td>
                         </tr>
                         <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
+                            <td>{{username}}</td>
+                            <td></td>
+                            <td>{{created}}</td>
                         </tr>
                         <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
+                            <td>{{username}}</td>
+                            <td></td>
+                            <td>{{created}}</td>
                         </tr>
                         </tbody>
                     </table>
-
+                    </div>
 
                 </div>
             </div>
