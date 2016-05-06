@@ -268,26 +268,26 @@
                             <h4 class="media-heading">{{book.title}}</h4> <h5> by {{book.author}}</h5>
                             {{book.description}}
                             <!-- MAKE A GROUP BUTTON -->
-                            <form ng-submit="makeGroup()">
-                                Book ID: <input type="text" ng-model="bookId"/><br>
-                                <input type="submit" value="Create Group"/>
-                            </form>
+                            <div ng-show="loggedIn()">
+                                <form ng-submit="makeGroup()">
+                                    Book ID: <input type="text" ng-model="bookID"/><br>
+                                    <input type="submit" value="Create Group"/>
+                                </form>
+                            </div>
+                            <ul ng-repeat="book in books" style="list-style: none">
+                                <li>
+
+
+                                </li>
+                            </ul>
+
                         </div>
                         <!-- Groups Available-->
-
                     </div>
-
-
-
-
-
                 </li>
             </ul>
         </section>
-
     </div>
-
-
 </div>
 
 

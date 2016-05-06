@@ -10,8 +10,7 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         $scope.error = null;
         $scope.searched = false;
         $scope.books = null;
-        $scope.searchTerm = null;
-        $scope.bookId = null;
+        $scope.groups = null;
         $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 
@@ -96,8 +95,13 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         };
 
         $scope.makeGroup = function () {
-            $scope.error = null;
-            mainService.makeGroup($scope.bookId).then(function (response) {
+            mainService.makeGroup($scope.bookID).then(function (response) {
+                console.log(response);
+            });
+        };
+
+        $scope.getGroups = function () {
+            mainService.getGroups($scope.bookID).then(function (response) {
                 console.log(response);
             });
         };
@@ -215,17 +219,23 @@ appModule.service('mainService', function ($http) {
             });
         },
 
-        makeGroup: function (bookId) {
-            var data = "bookId=" + bookId;
+        makeGroup: function (bookID) {
+            var data = "bookId=" + bookID;
+            console.log(bookID);
 
             $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
             //$http.defaults.headers.common.Authorization = 'Bearer ' + token;
             console.log(data);
 
-            return $http.post('http://localhost:8080/groups', data).then(function (response) {
+            return $http.post('http://localhost:8080/groups', bookID).then(function (response) {
                 console.log(response);
                 return response;
             });
+        },
+
+        getGroups: function (bookID) {
+
+
         },
 
         findThread: function (username) {
