@@ -11,6 +11,7 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         $scope.searched = false;
         $scope.books = null;
         $scope.groups = null;
+        $scope.usersGroups = null;
         $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 
@@ -19,10 +20,11 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
             mainService.login($scope.userName, $scope.password).then(function (token) {
                     $scope.token = token;
                     console.log("token=" + token);
-
                     $http.defaults.headers.common.Authorization = 'Bearer ' + token;
-
-
+                    $http.post('http://localhost:8080/users/groups').then(function(response){
+                        console.log(response.data);
+                        $scope.usersGroups = response;
+                    });
                 },
                 function (error) {
                     $scope.error = error;
@@ -31,6 +33,9 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
                     $scope.question = '';
                     $scope.answer = '';
                 });
+            //mainService.getUserGroups().then(function(response) {
+            //    console.log(response);
+            //});
         };
         $scope.createAccount = function () {
             $scope.error = null;
@@ -95,15 +100,15 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
         };
 
         $scope.makeGroup = function () {
-            mainService.makeGroup($scope.bookID).then(function (response) {
-                console.log(response);
-            });
+            //mainService.makeGroup($scope.bookID).then(function (response) {
+            //    console.log(response);
+            //});
         };
 
         $scope.getGroups = function () {
-            mainService.getGroups($scope.bookID).then(function (response) {
-                console.log(response);
-            });
+            //mainService.getGroups($scope.bookID).then(function (response) {
+            //    console.log(response);
+            //});
         };
 
 
@@ -233,9 +238,10 @@ appModule.service('mainService', function ($http) {
             });
         },
 
-        getGroups: function (bookID) {
-
-
+        getUserGroups: function () {
+            return $http.post('http://localhost:8080/users/groups').then(function (response) {
+                return response;
+            });
         },
 
         findThread: function (username) {

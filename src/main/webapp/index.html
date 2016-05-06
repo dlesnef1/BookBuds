@@ -171,13 +171,28 @@
 
         <!-- Download Section -->
         <section id="download" class="content-section text-center">
-            <div class="row">
+            <div class="row" ng-show="!loggedIn()">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2>*~BookGroups</h2>
+                    <h2>BookBuds has Book Groups</h2>
 
-                    <p></p>
+                    <p>Create an account or login to create and join book groups.</p>
                     <br><br><br><br><br><br><br><br><br><br><br><br>
 
+                </div>
+            </div>
+            <div class="row" ng-show="loggedIn()">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>{{userName}}'s Book Groups</h2>
+                    <ul ng-repeat="uGroup in userGroups" style="list-style: none">
+                        <li>ugh
+                            <div class="card card-block">
+                                <h4 class="card-title">{{uGroup.data.book.title}} Group {{uGroup.id}}</h4>
+                                <p>logged in {{uGroup</p>
+                                <a href="#" class="card-link">Join Group</a>
+                                <a href="#" class="card-link">View Group</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -194,7 +209,7 @@
 
                 </div>
 
-                <h2>*~Messaging</h2>
+                <h2>Messaging</h2>
 
                 <div ng-show="loggedIn()">
 
@@ -270,7 +285,7 @@
                             <!-- MAKE A GROUP BUTTON -->
                             <div ng-show="loggedIn()">
                                 <form ng-submit="makeGroup()">
-                                    Book ID: <input type="text" ng-model="bookID"/><br>
+                                    <!--Book ID: <input type="text" ng-model="bookID"/><br>-->
                                     <input type="submit" value="Create Group"/>
                                 </form>
                             </div>
