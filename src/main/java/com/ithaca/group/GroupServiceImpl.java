@@ -85,7 +85,7 @@ public class GroupServiceImpl implements GroupService {
         User user = userRepository.findOne(userId);
         Book_Group bookGroup = groupRepository.findOne(groupId);
 
-        if (user == null || bookGroup == null || !bookGroup.getUsers().contains(user)) {
+        if (user == null || bookGroup == null) {
             return null;
         }
 
@@ -108,7 +108,7 @@ public class GroupServiceImpl implements GroupService {
         Book_Group bookGroup = groupRepository.findOne(groupId);
         Post parent = postRepository.findOne(postId);
 
-        if (user == null || bookGroup == null || parent == null || !bookGroup.getUsers().contains(user)) {
+        if (user == null || bookGroup == null || parent == null) {
             return null;
         }
 

@@ -7,9 +7,6 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.when;
 
-/**
- * Created by David on 3/24/16.
- */
 public class UserTest {
 
     @Test

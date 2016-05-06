@@ -22,7 +22,7 @@ public class Thread {
     @JoinTable(name = "thread_user", joinColumns = @JoinColumn(name = "thread_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
-    @OneToMany(mappedBy = "thread")
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
     List<Message> messages;
 
     public Thread() {

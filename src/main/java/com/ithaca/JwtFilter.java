@@ -14,9 +14,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 
-/**
- * Created by David on 3/29/16.
- */
 public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(final ServletRequest req,

@@ -70,8 +70,9 @@ public class MessageServiceImpl implements MessageService {
 
         userRepository.save(user);
         userRepository.save(recipient);
+        threadRepository.save(currentThread);
         messageRepository.save(message);
-        return threadRepository.save(currentThread);
+        return currentThread;
     }
 
     @Override
