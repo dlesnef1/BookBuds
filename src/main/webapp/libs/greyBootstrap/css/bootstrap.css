@@ -5227,6 +5227,7 @@ a.thumbnail.active {
 }
 .media-object {
   display: block;
+  margin-bottom: 20px;
 }
 .media-object.img-thumbnail {
   max-width: none;
