@@ -5245,6 +5245,7 @@ a.thumbnail.active {
 .media-body {
   display: table-cell;
   vertical-align: top;
+  color: #0f0f0f;
 }
 .media-middle {
   vertical-align: middle;
@@ -5255,6 +5256,7 @@ a.thumbnail.active {
 .media-heading {
   margin-top: 0;
   margin-bottom: 5px;
+  color: #0f0f0f;
 }
 .media-list {
   padding-left: 0;
