@@ -37,9 +37,29 @@ appModule.controller('MainCtrl', ['mainService', '$scope', '$http',
             return $scope.groupCreated !== null;
         };
 
+        $scope.upvote = function(postId){
+           // var postId = 2;
+            mainService.upvote(postId).then(function(group){
+                $scope.posts = group.posts;
+
+                return group;
+            })
+        },
+
+        $scope.report = function(postId){
+            // var postId = 2;
+            mainService.report(postId).then(function(group){
+                $scope.posts = group.posts;
+
+                return group;
+            })
+        }
+
         $scope.reply = function () {
             mainService.reply($scope.groupId, $scope.text).then(function(response) {
-                console.log(response.data);
+                $scope.posts = response.posts;
+                $scope.text = '';
+                return response;
             });
 
         };
@@ -68,7 +88,21 @@ appModule.service('mainService', function ($http) {
                 return response.data;
 
             });
+        },
+        upvote: function (postId) {
+            return $http.put('http://localhost:8080/groups/1/'+ postId +'/upvote'). then(function (response) {
+                console.log(response.data);
+                return response.data;
+            });
+        },
+        report: function (postId) {
+            return $http.put('http://localhost:8080/groups/1/'+ postId +'/report'). then(function (response) {
+                console.log(response.data);
+                return response.data;
+            });
         }
+
+
     }
 
 });
