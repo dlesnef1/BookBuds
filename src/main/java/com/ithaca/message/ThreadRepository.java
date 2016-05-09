@@ -3,7 +3,7 @@ package com.ithaca.message;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * Created by David on 4/5/16.
+ * The thread repository, responsible for saving threads to the database.
  */
-public interface ThreadRepository extends CrudRepository<Thread, Long>{
+public interface ThreadRepository extends CrudRepository<Thread, Long> {
 }

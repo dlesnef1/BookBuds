@@ -13,9 +13,6 @@ import java.util.List;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by David on 3/28/16.
- */
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -27,7 +24,7 @@ public class UserServiceTest {
 
     @Test
     public void createTest() {
-        User saved = new User("four", "password4");
+        User saved = new User("four", "password4", "q", "a");
         when(userRepository.findByName(saved.getName())).thenReturn(saved);
 
         Assert.assertNull(userService.create(saved.getName(), saved.getPassword(), "question", "answer"));
@@ -35,7 +32,7 @@ public class UserServiceTest {
 
     @Test
     public void findTest() {
-        User user = new User("five", "password5");
+        User user = new User("five", "password5", "q", "a");
         when(userRepository.findOne((long) 1)).thenReturn(user);
 
         Assert.assertEquals("five", userService.find((long) 1).getName());
@@ -43,7 +40,7 @@ public class UserServiceTest {
 
     @Test
     public void checkValidTest() {
-        when(userRepository.findByName("user2")).thenReturn(new User("user2", "$2a$12$yJHCPO5jhCVO0m3jZICwoe1k9wq2ADDIq6raEXa88CKrQ8yXrke6u"));
+        when(userRepository.findByName("user2")).thenReturn(new User("user2", "$2a$12$yJHCPO5jhCVO0m3jZICwoe1k9wq2ADDIq6raEXa88CKrQ8yXrke6u", "q", "a"));
 
         Assert.assertNull(userService.checkValid("user1", "pass1"));
         Assert.assertEquals("user2", userService.checkValid("user2", "pass2").getName());
@@ -54,7 +51,7 @@ public class UserServiceTest {
         User user = new User("user3", "$2a$12$yJHCPO5jhCVO0m3jZICwoe1k9wq2ADDIq6raEXa88CKrQ8yXrke7u", "question", "$2a$12$hVesoCjSYL8KiWDm1fbHDu.TO.wTAgeyl2x0gkouPs466t.Gd0JjC");
 
         when(userRepository.findByName("user3")).thenReturn(user);
-        when(userRepository.save(any(User.class))).thenReturn(new User("user3", "pass3"));
+        when(userRepository.save(any(User.class))).thenReturn(new User("user3", "pass3", "q", "a"));
 
         Assert.assertNull(userService.checkValid("user1", "pass1"));
         Assert.assertEquals("pass3", userService.changePassword("user3", "pass3", "Rose").getPassword());

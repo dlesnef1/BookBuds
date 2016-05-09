@@ -12,10 +12,11 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by David on 3/24/16.
- */
 
+/**
+ * The user entity. Stores a user's account, including name, password, security q/a, and all of the things a user holds on to
+ * including book groups, messages, posts, threads.
+ */
 @Entity
 public class User {
 
@@ -49,16 +50,6 @@ public class User {
     private List<Post> posts;
 
     public User() {
-    }
-
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-        this.messages = new ArrayList<>();
-        this.threads = new ArrayList<>();
-        this.messages = new ArrayList<>();
-        this.book_groups = new ArrayList<>();
-        this.posts = new ArrayList<>();
     }
 
     public User(String name, String password, String securityQuestion, String securityAnswer) {

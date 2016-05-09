@@ -4,9 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by David on 4/28/16.
+ * The group repository which allows for saving of groups to the database.
  */
-
 @Repository
-public interface GroupRepository extends CrudRepository<Book_Group, Long>{
+public interface GroupRepository extends CrudRepository<Book_Group, Long> {
 }

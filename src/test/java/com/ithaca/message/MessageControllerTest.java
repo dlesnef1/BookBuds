@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by David on 4/6/2016.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class MessageControllerTest {
 
@@ -33,9 +30,9 @@ public class MessageControllerTest {
     @Before
     public void init() {
         thread = new Thread();
-        User user = new User("David", "pass");
+        User user = new User("David", "pass", "q", "a");
         thread.getUsers().add(user);
-        thread.getUsers().add(new User("Nick", "pass"));
+        thread.getUsers().add(new User("Nick", "pass", "q", "a"));
         thread.getMessages().add(new Message(user, thread, "Message to Nick", "time"));
 
         request = mock(HttpServletRequest.class);
@@ -52,13 +49,13 @@ public class MessageControllerTest {
 
     @Test
     public void testFindThread() {
-        Assert.assertEquals(1 ,messageController.findThread(request, "Nick").getMessages().size());
-        Assert.assertEquals("Message to Nick" ,messageController.findThread(request, "Nick").getMessages().get(0).getText());
+        Assert.assertEquals(1 ,messageController.findThread(request, "Nick").getBody().getMessages().size());
+        Assert.assertEquals("Message to Nick" ,messageController.findThread(request, "Nick").getBody().getMessages().get(0).getText());
     }
 
     @Test
     public void testCreate() {
-        Assert.assertEquals(0 ,messageController.create(request, "Nick", "Another message to Nick").getMessages().size());
+        Assert.assertEquals(0 ,messageController.create(request, "Nick", "Another message to Nick").getBody().getMessages().size());
     }
 
     @Test

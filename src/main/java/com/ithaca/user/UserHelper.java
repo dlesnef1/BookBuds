@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by David on 3/29/16.
+ * Helper class that can generate a token based off of a user. This token then identifies the user for future backend hits.
  */
 @Service
 public class UserHelper {

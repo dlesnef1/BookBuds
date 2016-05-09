@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- * Created by David on 4/27/16.
- */
 
+/**
+ * Runs on startup, seeds the database with all of books we have.
+ */
 @Component
 public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
 

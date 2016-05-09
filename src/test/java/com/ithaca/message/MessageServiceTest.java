@@ -12,9 +12,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by David on 4/5/16.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class MessageServiceTest {
 
@@ -30,8 +27,8 @@ public class MessageServiceTest {
     @Test
     public void findThreadTest() {
         Long one = 1L;
-        User user1 = new User("David", "pass");
-        User user2 = new User("Nick", "pass");
+        User user1 = new User("David", "pass", "q", "a");
+        User user2 = new User("Nick", "pass", "q", "a");
         Thread thread = new Thread();
         thread.getUsers().add(user1);
         thread.getUsers().add(user2);
@@ -53,8 +50,8 @@ public class MessageServiceTest {
     @Test
     public void createTest() {
         Long one = 1L;
-        User user1 = new User("David", "pass");
-        User user2 = new User("Nick", "pass");
+        User user1 = new User("David", "pass", "q", "a");
+        User user2 = new User("Nick", "pass", "q", "a");
         Thread thread = new Thread();
         thread.getUsers().add(user1);
         thread.getUsers().add(user2);
@@ -72,7 +69,7 @@ public class MessageServiceTest {
     @Test
     public void editTest() {
         Long one = 1L;
-        User user = new User("David", "pass");
+        User user = new User("David", "pass", "q", "a");
         Thread thread = new Thread();
         thread.getUsers().add(user);
         Message message = new Message(user, thread, "Message to Nick", "time");
@@ -89,7 +86,7 @@ public class MessageServiceTest {
     @Test
     public void deleteTest() {
         Long one = 1L;
-        User user = new User("David", "pass");
+        User user = new User("David", "pass", "q", "a");
         Thread thread = new Thread();
         thread.getUsers().add(user);
         Message message = new Message(user, thread, "Message to Nick", "time");

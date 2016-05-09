@@ -3,9 +3,6 @@ package com.ithaca.user;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by David on 3/29/16.
- */
 public class UserHelperTest {
 
     @Test

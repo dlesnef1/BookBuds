@@ -7,9 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by David on 4/4/16.
+ * The message entity. A message is a personal message sent between two users. It contains text and a time created. A User is
+ * associated with it, along with the Thread that it is in.
  */
-
 @Entity
 public class Message {
 

@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by David on 4/19/16.
+ * The book entity. A book has an id, a title, an author, a publisher, an isbn, a date, an imageUrl,
+ * a description, and book groups. The books groups are all of the groups already made that are for this
+ * individual book.
  */
-
 @Entity
 public class Book {
 
@@ -20,11 +21,11 @@ public class Book {
     private Long id;
 
     @NotNull
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String title;
 
     @NotNull
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String author;
 
     @NotNull
@@ -36,10 +37,10 @@ public class Book {
     @NotNull
     private String date;
 
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String imageUrl;
 
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text")
     private String description;
 
     @OneToMany(mappedBy = "book")

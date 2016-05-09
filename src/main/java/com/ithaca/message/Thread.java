@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by David on 4/5/16.
+ * Thread entity which is the list of message between two users.
  */
 @Entity
 public class Thread {
@@ -19,10 +19,10 @@ public class Thread {
     private Long id;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="thread_user", joinColumns=@JoinColumn(name="thread_id"), inverseJoinColumns=@JoinColumn(name="user_id"))
+    @JoinTable(name = "thread_user", joinColumns = @JoinColumn(name = "thread_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
-    @OneToMany (mappedBy="thread")
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
     List<Message> messages;
 
     public Thread() {

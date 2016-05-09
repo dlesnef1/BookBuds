@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by David on 4/28/16.
- */
 @Service
 public class GroupServiceImpl implements GroupService {
 
@@ -88,7 +85,7 @@ public class GroupServiceImpl implements GroupService {
         User user = userRepository.findOne(userId);
         Book_Group bookGroup = groupRepository.findOne(groupId);
 
-        if (user == null || bookGroup == null || !bookGroup.getUsers().contains(user)) {
+        if (user == null || bookGroup == null) {
             return null;
         }
 
@@ -158,7 +155,7 @@ public class GroupServiceImpl implements GroupService {
         Book_Group bookGroup = groupRepository.findOne(groupId);
         Post post = postRepository.findOne(postId);
 
-        if (user == null || bookGroup == null || post == null) {
+        if (user == null || bookGroup == null || post == null || !bookGroup.getUsers().contains(user)) {
             return null;
         }
 

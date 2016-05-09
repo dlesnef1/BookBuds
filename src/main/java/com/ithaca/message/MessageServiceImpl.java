@@ -7,12 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by David on 4/5/16.
- */
 
 @Service
-public class MessageServiceImpl implements MessageService{
+public class MessageServiceImpl implements MessageService {
 
     @Autowired
     UserRepository userRepository;
@@ -32,7 +29,7 @@ public class MessageServiceImpl implements MessageService{
             return null;
         }
 
-        for (Thread thread: user.getThreads()) {
+        for (Thread thread : user.getThreads()) {
             if (thread.getUsers().contains(otherUser)) {
                 return thread;
             }
@@ -51,7 +48,7 @@ public class MessageServiceImpl implements MessageService{
         }
 
         Thread currentThread = null;
-        for (Thread thread: user.getThreads()) {
+        for (Thread thread : user.getThreads()) {
             if (thread.getUsers().contains(recipient)) {
                 currentThread = thread;
             }
@@ -73,8 +70,9 @@ public class MessageServiceImpl implements MessageService{
 
         userRepository.save(user);
         userRepository.save(recipient);
+        threadRepository.save(currentThread);
         messageRepository.save(message);
-        return threadRepository.save(currentThread);
+        return currentThread;
     }
 
     @Override

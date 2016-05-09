@@ -6,16 +6,12 @@ import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by David on 4/4/16.
- */
 public class MessageTest {
 
     @Test
     public void testMessage() {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
-
-        User user = new User("David", "password");
+        User user = new User("David", "password", "q", "a");
         Message message = new Message(user, new Thread(), "This is my message", timeStamp);
 
         Assert.assertEquals("This is my message", message.getText());
