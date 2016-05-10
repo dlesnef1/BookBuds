@@ -219,7 +219,7 @@ appModule.service('mainService', function ($http) {
             var data = "title=" + searchTerm;
             //console.log(data);
             return $http.post('http://localhost:8080/books', data).then(function (response) {
-                //console.log(response.data);
+                console.log(response.data);
                 return response;
             });
         },
