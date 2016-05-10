@@ -99,11 +99,15 @@
                     <h4 class="media-heading" style="color:WHITE">Frankenstein</h4>
                     <h5> by Mary Shelley</h5>
                     <p style="font-size: 12pt">
-                    Few creatures of horror have seized readers' imaginations and held them for so long as the anguished
-                    monster of Mary Shelley'sÂ Frankenstein. The story of Victor Frankenstein's terrible creation and
-                    the havoc it caused has enthralled generations of readers and inspired countless writers of horror
-                    and suspense. Considering the novel's enduring success, it is remarkable that it began merely as a
-                    whim of Lord Byron's.
+                        Few creatures of horror have seized readers' imaginations and held them for so long as the
+                        anguished
+                        monster of Mary Shelley'sÂ Frankenstein. The story of Victor Frankenstein's terrible creation
+                        and
+                        the havoc it caused has enthralled generations of readers and inspired countless writers of
+                        horror
+                        and suspense. Considering the novel's enduring success, it is remarkable that it began merely as
+                        a
+                        whim of Lord Byron's.
                     </p>
 
                     <!-- MAKE A GROUP BUTTON -->
@@ -126,20 +130,53 @@
                              alt="Dr. Funkenstein" width="150px">
                     </a>
                 </div>
+                <div class="media-right" style="color:WHITE">
+                    <h4 class="media-heading" style="color:WHITE">Frankenstein</h4>
+                    <h5> by Mary Shelley</h5>
+                    <p style="font-size: 11pt">
+                        Few creatures of horror have seized readers' imaginations and held them for so long as the
+                        anguished
+                        monster of Mary Shelley'sÂ Frankenstein. The story of Victor Frankenstein's terrible creation
+                        and
+                        the havoc it caused has enthralled generations of readers and inspired countless writers of
+                        horror
+                        and suspense. Considering the novel's enduring success, it is remarkable that it began merely as
+                        a
+                        whim of Lord Byron's.
+                    </p>
+                </div>
 
             </div>
             <ul class="list-group" style="list-style: none">
                 <li class="list-group-item" ng-repeat="post in posts">
-                    <span class="badge">{{post.score}}</span>
-                    <button class="badge" ng-click="upvote(post.id)">UP!</button>
                     <button class="badge" ng-click="report(post.id)">REPORT</button>
+                    <button class="badge" ng-show="!showReply()" ng-click="setReply()">reply</button>
+                    <button class="badge" ng-click="upvote(post.id)">UP!</button>
+                    <span class="badge">{{post.score}}</span>
+
                     <div class="media-body">
                         <h4 class="media-heading">{{post.user.name}}</h4>
-                        {{post.text}}
-                    </div>
-                </li>
- 
+                        {{post.text}}<br>
 
+                        <div ng-show="showReply()">
+                            <form style="color:WHITE" ng-submit="replyTo(post.id, text)">
+                                <input type="text" ng-model="text"/>
+                                <input type="submit" value="Post"/>
+                            </form>
+                        </div>
+                    </div>
+                    <ul>
+                        <li ng-repeat="cPost in post.children">
+                            <div class="media-body">
+                                <h4 class="media-heading">{{cPost.user.name}}</h4>
+                                {{cPost.text}}<br>
+                                <span class="badge">{{cPost.score}}</span>
+                                <button class="badge" ng-click="upvote(cPost.id)">UP!</button>
+                                <button class="badge" ng-click="report(cPost.id)">REPORT</button>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
             <div>
